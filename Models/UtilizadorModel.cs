@@ -18,5 +18,6 @@ namespace YURent.Models
         public string UrlImagemPerfil { get; set; }
         public string Email { get; set; }
 
+        public List<AnunciosModel> AnunciosModel { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using YURent.Models;
 
 namespace YURent.Data
 {
@@ -14,8 +15,8 @@ namespace YURent.Data
         [Key]
         public int Id_anuncio { get; set; }
 
-        public int Id_utilizador { get; set; }
-
+        public int Id_Utilizador { get; set; }
+        public UtilizadorModel UtilizadorModel { get; set; }
 
         [Required(ErrorMessage = "Por favor insira um título")]
         public string Título { get; set; }

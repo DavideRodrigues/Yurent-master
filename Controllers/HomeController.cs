@@ -72,8 +72,32 @@ namespace YURent.Controllers
                     }
                 }
             }
-            
+
             return View(anuncios);
+        }
+
+        public async Task<ViewResult> PesquisarCategoria(string categoria)
+        {
+            var anuncios = new List<AnunciosModel>();
+            var anuncios2 = await _context.Anuncios.Where(a => a.Categoria == categoria).ToListAsync();
+
+            if (anuncios2?.Any() == true)
+            {
+                foreach (var anuncio in anuncios2)
+                {
+                    anuncios.Add(new AnunciosModel()
+                    {
+                        Id_anuncio = anuncio.Id_anuncio,
+                        Título = anuncio.Título,
+                        Descricao = anuncio.Descricao,
+                        Categoria = anuncio.Categoria,
+                        Preco_dia = anuncio.Preco_dia,
+                        UrlImagem = anuncio.UrlImagem
+                    });
+                }
+            }
+
+            return View();
         }
 
         public IActionResult Perfil()
@@ -81,8 +105,6 @@ namespace YURent.Controllers
             return View();
         }
 
-
-       
 
     }
 }

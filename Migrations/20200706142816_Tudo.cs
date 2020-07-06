@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YURent.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Tudo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,7 @@ namespace YURent.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
@@ -38,15 +39,114 @@ namespace YURent.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 256, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    ConfirmaPassword = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faturacao",
+                columns: table => new
+                {
+                    Id_faturacao = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome_completo = table.Column<string>(nullable: true),
+                    Morada = table.Column<string>(nullable: true),
+                    Codigo_Postal = table.Column<string>(nullable: true),
+                    Nif = table.Column<int>(nullable: false),
+                    Iban = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Id_utilizador = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faturacao", x => x.Id_faturacao);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mensagens",
+                columns: table => new
+                {
+                    Id_mensagem = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(nullable: false),
+                    Id_anuncio = table.Column<int>(nullable: false),
+                    Fromseller = table.Column<bool>(nullable: false),
+                    Conteudo = table.Column<string>(nullable: true),
+                    Vista = table.Column<bool>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Id_utilizador = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mensagens", x => x.Id_mensagem);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reservas",
+                columns: table => new
+                {
+                    Id_reserva = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id_anuncio = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    Data_inicio = table.Column<DateTime>(nullable: false),
+                    Data_fim = table.Column<DateTime>(nullable: false),
+                    Preco = table.Column<float>(nullable: false),
+                    Cancelado = table.Column<bool>(nullable: false),
+                    Id_utilizador = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservas", x => x.Id_reserva);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transacoes",
+                columns: table => new
+                {
+                    Id_transacoes = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id_reserva = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Id_utilizador = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transacoes", x => x.Id_transacoes);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Utilizador",
+                columns: table => new
+                {
+                    Id_utilizador = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: true),
+                    UrlImagemPerfil = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Utilizador", x => x.Id_utilizador);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Verificacao",
+                columns: table => new
+                {
+                    Id_verificacao = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Telemovel = table.Column<string>(nullable: true),
+                    Num_cc = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Id_utilizador = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Verificacao", x => x.Id_verificacao);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,6 +255,38 @@ namespace YURent.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Anuncios",
+                columns: table => new
+                {
+                    Id_anuncio = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UtilizadorId_utilizador = table.Column<int>(nullable: true),
+                    Título = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(nullable: true),
+                    Categoria = table.Column<string>(nullable: true),
+                    Preco_dia = table.Column<float>(nullable: false),
+                    Visualizacoes = table.Column<int>(nullable: false),
+                    UrlImagem = table.Column<string>(nullable: true),
+                    Ativo = table.Column<bool>(nullable: false),
+                    Data_publicacao = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Anuncios", x => x.Id_anuncio);
+                    table.ForeignKey(
+                        name: "FK_Anuncios_Utilizador_UtilizadorId_utilizador",
+                        column: x => x.UtilizadorId_utilizador,
+                        principalTable: "Utilizador",
+                        principalColumn: "Id_utilizador",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Anuncios_UtilizadorId_utilizador",
+                table: "Anuncios",
+                column: "UtilizadorId_utilizador");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +330,9 @@ namespace YURent.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Anuncios");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -211,6 +346,24 @@ namespace YURent.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Faturacao");
+
+            migrationBuilder.DropTable(
+                name: "Mensagens");
+
+            migrationBuilder.DropTable(
+                name: "Reservas");
+
+            migrationBuilder.DropTable(
+                name: "Transacoes");
+
+            migrationBuilder.DropTable(
+                name: "Verificacao");
+
+            migrationBuilder.DropTable(
+                name: "Utilizador");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

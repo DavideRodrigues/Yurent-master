@@ -10,8 +10,8 @@ using YURent.Data;
 namespace YURent.Migrations
 {
     [DbContext(typeof(YURentContext))]
-    [Migration("20200618111817_Initial-Create")]
-    partial class InitialCreate
+    [Migration("20200706142816_Tudo")]
+    partial class Tudo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -156,6 +156,171 @@ namespace YURent.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Faturacao", b =>
+                {
+                    b.Property<int>("Id_faturacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Codigo_Postal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Iban")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Morada")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Nif")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome_completo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id_faturacao");
+
+                    b.ToTable("Faturacao");
+                });
+
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Mensagens", b =>
+                {
+                    b.Property<int>("Id_mensagem")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Conteudo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Fromseller")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_anuncio")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Vista")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id_mensagem");
+
+                    b.ToTable("Mensagens");
+                });
+
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Reservas", b =>
+                {
+                    b.Property<int>("Id_reserva")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Cancelado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Data_fim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Data_inicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_anuncio")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Preco")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id_reserva");
+
+                    b.ToTable("Reservas");
+                });
+
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Transacoes", b =>
+                {
+                    b.Property<int>("Id_transacoes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id_reserva")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_transacoes");
+
+                    b.ToTable("Transacoes");
+                });
+
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Utilizador", b =>
+                {
+                    b.Property<int>("Id_utilizador")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlImagemPerfil")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id_utilizador");
+
+                    b.ToTable("Utilizador");
+                });
+
+            modelBuilder.Entity("YURent.Areas.Identity.Data.Verificacao", b =>
+                {
+                    b.Property<int>("Id_verificacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Num_cc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telemovel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id_verificacao");
+
+                    b.ToTable("Verificacao");
+                });
+
             modelBuilder.Entity("YURent.Areas.Identity.Data.YURentUser", b =>
                 {
                     b.Property<string>("Id")
@@ -168,11 +333,8 @@ namespace YURent.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConfirmaPassword")
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
@@ -184,9 +346,6 @@ namespace YURent.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -194,9 +353,6 @@ namespace YURent.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -228,6 +384,47 @@ namespace YURent.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("YURent.Data.Anuncios", b =>
+                {
+                    b.Property<int>("Id_anuncio")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Categoria")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Data_publicacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Preco_dia")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Título")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrlImagem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UtilizadorId_utilizador")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Visualizacoes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id_anuncio");
+
+                    b.HasIndex("UtilizadorId_utilizador");
+
+                    b.ToTable("Anuncios");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -279,6 +476,13 @@ namespace YURent.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("YURent.Data.Anuncios", b =>
+                {
+                    b.HasOne("YURent.Areas.Identity.Data.Utilizador", "Utilizador")
+                        .WithMany("Anuncios")
+                        .HasForeignKey("UtilizadorId_utilizador");
                 });
 #pragma warning restore 612, 618
         }

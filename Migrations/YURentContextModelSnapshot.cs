@@ -403,9 +403,6 @@ namespace YURent.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id_utilizador")
-                        .HasColumnType("int");
-
                     b.Property<float>("Preco_dia")
                         .HasColumnType("real");
 

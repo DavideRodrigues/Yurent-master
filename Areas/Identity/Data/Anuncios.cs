@@ -15,8 +15,6 @@ namespace YURent.Data
     {
         [Key]
         public int Id_anuncio { get; set; }
-
-        public int Id_utilizador { get; set; }
         public Utilizador Utilizador { get; set; }
 
         public string Título { get; set; }

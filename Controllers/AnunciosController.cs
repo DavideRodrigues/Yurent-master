@@ -70,17 +70,18 @@ namespace YURent.Controllers
 
                     await model.Imagem.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
                     model.UrlImagem = "/" + folder;
-                    
 
                     Anuncios novoAnuncio = new Anuncios
                     {
+                        Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name),
+                        
                         Título = model.Título,
                         Descricao = model.Descricao,
                         Categoria = model.Categoria,
                         Preco_dia = model.Preco_dia,
                         Data_publicacao = DateTime.UtcNow,
                         UrlImagem = model.UrlImagem,
-                        Id_utilizador = model.Id_utilizador
+                        Visualizacoes = 0
                     };
 
                     await _context.Anuncios.AddAsync(novoAnuncio);
@@ -96,7 +97,9 @@ namespace YURent.Controllers
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
+
             var anuncio = await _context.Anuncios.FindAsync(id);
+
             if (anuncio != null)
             {
                 var anuncioDetails = new AnunciosModel()
@@ -109,9 +112,15 @@ namespace YURent.Controllers
                     UrlImagem = anuncio.UrlImagem
                 };
 
+                var views = new Anuncios
+                {
+                    Visualizacoes = anuncio.Visualizacoes + 1
+                };
+                _context.Anuncios.Update(views);
+                await _context.SaveChangesAsync();
                 return View(anuncioDetails);
             }
-            return View("ResultadoPesquisa");
+            return View();
         }
         #endregion
 
@@ -126,7 +135,7 @@ namespace YURent.Controllers
         #endregion
 
 
-        
+
 
     }
 }
