@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using YURent.Data;
 
 namespace YURent.Areas.Identity.Data
 {
@@ -11,10 +12,8 @@ namespace YURent.Areas.Identity.Data
     {
         [Key]
         public int Id_reserva { get; set; }
-        [ForeignKey("Id_anuncio")]
-        public int Id_anuncio { get; set; }
-        [ForeignKey("Id")]
-        public int Id { get; set; }
+        public Anuncios Anuncio { get; set; }
+        public Utilizador Utilizador { get; set; }
         public DateTime Data_inicio { get; set; }
         public DateTime Data_fim { get; set; }
         public float Preco { get; set; }

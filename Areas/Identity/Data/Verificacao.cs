@@ -16,7 +16,7 @@ namespace YURent.Areas.Identity.Data
 
         public string Email { get; set; }
 
-        public int Id_utilizador { get; set; }
+        public Utilizador Utilizador { get; set; }
 
     }
 }

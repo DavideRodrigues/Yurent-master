@@ -12,6 +12,7 @@ namespace YURent.Areas.Identity.Data
         [Key]
         public int Id_faturacao { get; set; }
 
+        public Utilizador Utilizador { get; set; }
 
         public string Nome_completo { get; set; }
 

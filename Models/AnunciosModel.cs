@@ -14,8 +14,6 @@ namespace YURent.Data
     {
         [Key]
         public int Id_anuncio { get; set; }
-
-        public int Id_Utilizador { get; set; }
         public UtilizadorModel UtilizadorModel { get; set; }
 
         [Required(ErrorMessage = "Por favor insira um título")]

@@ -74,20 +74,19 @@ namespace YURent.Controllers
                     Anuncios novoAnuncio = new Anuncios
                     {
                         Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name),
-                        
                         Título = model.Título,
                         Descricao = model.Descricao,
                         Categoria = model.Categoria,
                         Preco_dia = model.Preco_dia,
                         Data_publicacao = DateTime.UtcNow,
-                        UrlImagem = model.UrlImagem,
-                        Visualizacoes = 0
+                        UrlImagem = model.UrlImagem
                     };
 
                     await _context.Anuncios.AddAsync(novoAnuncio);
                     await _context.SaveChangesAsync();
                 }
             }
+
 
             return RedirectToAction("Anuncio", model.Id_anuncio);
         }
