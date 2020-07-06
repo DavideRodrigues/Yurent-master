@@ -1,0 +1,69 @@
+﻿@model YURent.Data.AnunciosModel
+@{
+    ViewData["Title"] = "Adicionar Anúncio";
+}
+
+<div class="container">
+    <h4 class="display-4">Cria já o teu anúncio!</h4>
+    <form method="post" enctype="multipart/form-data" asp-action="AdicionarAnuncio" asp-controller="Anuncios">
+
+        <div class="form-group">
+            <label asp-for="Título"></label>
+            <input required asp-for="Título" class="form-control" />
+            <span asp-validation-for="Título"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Descricao "></label>
+            <input asp-for="Descricao" class="form-control" />
+            <span asp-validation-for="Descricao"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Categoria"></label>
+            <select id="select1" class="form-control" asp-for="Categoria">
+                <option selected disabled>  Escolher Categoria </option>
+                <option>Cameras</option>
+                <option>Drones</option>
+                <option>Lentes</option>
+                <option>Eletrónica</option>
+                <option>Projetores</option>
+                <option>Instrumentos</option>
+            </select>
+
+            <span asp-validation-for="Categoria"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Preco_dia"></label>
+            <input required asp-for="Preco_dia" class="form-control" />
+            <span asp-validation-for="Preco_dia"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Imagem"></label>
+
+            <div class="custom-file">
+                <input asp-for="Imagem" class="custom-file-input" id="validatedCustomFile" accept=".png, .jpg, .jpeg">
+                <label class="custom-file-label" for="validatedCustomFile">Escolhe uma Imagem...</label>
+            </div>
+                
+            <span asp-validation-for="Imagem"></span>
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" value="Adicionar" class="btn btn-orange text-white" />
+        </div>
+        <h4>@ViewBag.message</h4>
+
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).next(".custom-file-label").text(filename)
+                    });
+                });
+            </script>
+        }
+    </form>
+</div>

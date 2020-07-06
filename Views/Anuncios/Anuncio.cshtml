@@ -1,0 +1,124 @@
+﻿@model YURent.Data.AnunciosModel
+
+@{          
+    ViewData["Title"] = "Anuncio";
+}
+
+<div class="container mt-5">
+    <div class="row mb-2">
+        <h2 class="col-12 col-md-7">@Model.Título</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-7 m-0">
+            <img class="d-block w-100 imagem-teste" src="@Model.UrlImagem" />
+        </div>
+        <div class="col-md-5 d-none d-md-block position-sticky">
+            @* MENU LATERAL PARA ALUGAR *@
+            <div class="card" style="position:fixed; width: 19rem;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Detalhes de Aluguer</h5>
+                    <div class="d-flex justify-content-between">
+                        <p>Data:</p>
+                        @*@Html.Partial("rangeselection");*@ 
+                        <p>01/02/2020 - 03/02/2020</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>@Model.Preco_dia€ x 1 Dia:</p>
+                        @{float preco = (@Model.Preco_dia * 2);}
+                        <p>@preco €</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Taxa de Serviço:</p>
+                        @{double servico = (@Model.Preco_dia * 0.15);}
+                        <p>@servico€</p>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <p>Total:</p>
+                        @{double total = (preco + servico);}
+                        <p>@total€</p>
+                    </div>
+                    <a href="#" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-7 d-block mt-2">
+            <h3>Descrição</h3>
+            <p class="text-grey">
+                @Model.Descricao
+            </p>
+            <hr />
+            @* LOCALIZAÇÃO *@
+            <h3>Localização</h3>
+            <p class="text-grey">
+                Lisboa - Bairro Alto
+            </p>
+            <hr />
+            @* FALA COM O SERAFIM *@
+            <h3>Fala com o Serafim</h3>
+            <div class="d-flex mt-2">
+                <a asp-controller="home" asp-action="perfil">
+                    <img class="avatar-anuncio" src="~/images/avatar.png" />
+                </a>
+                <div class="p-2">
+                    <p class="font-weight-bold mb-0">Serafim<i class="ml-1 fas fa-check-circle margin"></i></p>
+                    <img class="star-anuncio" src="~/images/stars/5-star.png" /> (28)
+                    <p>Tenho coisas extras e sei que vão perder o valor vender por isso pensei porque não alugá-las?</p>
+                </div>
+            </div>
+            <a class="btn btn-orange-outline" href="#">Contactar Serafim</a> @* Entrar no chat com o alugador *@
+
+            <hr />
+
+            <h3>73 Avaliações</h3>
+            <div class="d-flex mt-2">
+                <img class="avatar-anuncio" src="~/images/anuncio/RobertoFlores.png" />
+                <div class="p-2">
+                    <img class="star-anuncio" src="~/images/stars/5-star.png" />
+                    <p class="font-weight-bold mb-0">Roberto Flores</p>
+                    <p>Abril 2020</p>
+                </div>
+            </div>
+            <a class="link mt-1" href="#">Ver todas as avaliações</a> @* Abrir um modal com as avaliações do utilizador *@
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @* Outros Produtos *@
+    <h3>Outros produtos de Serafim</h3>
+    <div class="row mt-2">
+        <div class="col-12 col-md-7">
+            <div class="flex">
+                <div class="outrosprodutos mx-md-2">
+                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                    <h5>Camâra CuatroKappa</h5>
+                    <h4 class="orange">10€ / Dia</h4>
+                    <p>Almada</p>
+                    <img class="star-produto" src="~/images/Stars/4-star.png" />
+                </div>
+                <div class="outrosprodutos mx-md-2">
+                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                    <h5>Camâra CuatroKappa</h5>
+                    <h4 class="orange">10€ / Dia</h4>
+                    <p>Almada</p>
+                    <img class="star-produto" src="~/images/Stars/4-star.png" />
+                </div>
+                <div class="outrosprodutos mx-md-2">
+                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                    <h5>Camâra CuatroKappa</h5>
+                    <h4 class="orange">10€ / Dia</h4>
+                    <p>Almada</p>
+                    <img class="star-produto" src="~/images/Stars/4-star.png" />
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="d-block d-sm-none container-fluid fixed-bottom text-center border-top bg-light">
+    <a href="#"><h3 class="btn btn-orange text-white display-4 m-2">Pedir para Alugar</h3></a>
+</div>

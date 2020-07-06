@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+@* CONTAINER COM FOTO DE PERFIL / DESCRIÇAO / RATING / INFORMACAO VERIFICADA *@
+<div class="container" id="desc-perfil">
+    <div class="flex">
+        <div class="col-md-3 col-sm-12">
+            <img class="avatar-perfil" src="~/images/avatar.png" />
+        </div>
+        <div class="col-md-9 col-sm-12 pl-sm-5">
+            <div class="d-flex">
+                <h3 class="margin"><i class="fas fa-check-circle margin"></i>Serafim</h3>
+                <a class="btn btn-orange text-white" id="botaomensagem" href="">Enviar Mensagem</a>
+            </div>
+            <div class="d-flex">
+                <p class="star margin pt-2"><img src="~/images/Stars/5-star.png" /></p>
+                <p class="pt-2">Entrou em Maio 2019</p>
+            </div>
+            <div class="flex">
+                <p>Tenho coisas extras e sei que vão perder o valor a vender, por isso pensei: porque não alugar? Não sei o meu nome é davide e eu não porque estou a alugar as minhas coisas neste site lindo e gostoso.</p>
+            </div>
+            <h6>Informação verificada</h6>
+            <div class="flex">
+                <p class="margin"><i class="fas fa-check-circle"></i> Cartão de Cidadão</p>
+                <p><i class="fas fa-check-circle"></i> Numero de Telemóvel</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* CONTAINER ONDE SÂO MOSTRADAS AS AVALIAÇÕES *@
+<div class="container" id="aval-perfil">
+    <h3>Avaliações</h3>
+    <div class="flex">
+        @* FUTURAMENTE VAI SER TROCADO POR UM FOREACH QUE IRÁ APRESENTAR AS 3 REVIEWS MAIS RECENTES *@
+        <div class="col-md-4 avaliacao d-flex mr-2">
+            <div class="col-md-3 pr-0">
+                <img id="avatar-avaliacao" src="~/images/avatar.png" />
+            </div>
+            <div class="col-md-9 pl-sm-5">
+                <img id="star-avaliacao" src="~/images/Stars/5-star.png" />
+                <h6>Roberto Flores</h6>
+                <p>24 Abril 1974</p>
+            </div>
+        </div>
+        <div class="col-md-4 avaliacao d-flex mr-2">
+            <div class="col-md-3 pr-0">
+                <img id="avatar-avaliacao" src="~/images/avatar.png" />
+            </div>
+            <div class="col-md-9 pl-sm-5">
+                <img id="star-avaliacao" src="~/images/Stars/5-star.png" />
+                <h6>Roberto Flores</h6>
+                <p>24 Abril 1974</p>
+            </div>
+        </div>
+        <div class="col-md-4 avaliacao d-flex">
+            <div class="col-md-3 pr-0">
+                <img id="avatar-avaliacao" src="~/images/avatar.png" />
+            </div>
+            <div class="col-md-9 pl-sm-5">
+                <img id="star-avaliacao" src="~/images/Stars/5-star.png" />
+                <h6>Roberto Flores</h6>
+                <p>24 Abril 1974</p>
+            </div>
+        </div>
+    </div>
+    <a href="#modalAvaliacoes" class="link">Ver mais x avaliações</a>
+</div>
+
+@* CONTAINER ONDE SÂO APRESENTADOS OUTROS PRODUTOS DO VENDEDOR *@
+<div class="container" id="outrosprodutos">
+    <h3>Outros produtos de Serafim</h3>
+    <div class="row mt-2">
+        <div class="col-md-3">
+            <div class="col-md-12 outrosprodutos">
+                <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                <h5>Camâra CuatroKappa</h5>
+                <h3 class="orange">10€ / Dia</h3>
+                <p>Almada</p>
+                <img class="star-produto" src="~/images/Stars/4-star.png" />(57)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="col-md-12 outrosprodutos">
+                <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                <h5>Camâra QuateroKappa</h5>
+                <h3 class="orange">10€ / Dia</h3>
+                <p>Almada</p>
+                <img class="star-produto" src="~/images/Stars/4-star.png" /> (57)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="col-md-12 outrosprodutos">
+                <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                <h5>Camâra QuatroKappa</h5>
+                <h3 class="orange">10€ / Dia</h3>
+                <p>Almada</p>
+                <img class="star-produto" src="~/images/Stars/4-star.png" /> (57)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="col-md-12 outrosprodutos">
+                <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                <h5>Camâra QuartoKappa</h5>
+                <h3 class="orange">10€ / Dia</h3>
+                <p>Almada</p>
+                <img class="star-produto" src="~/images/Stars/4-star.png" /> (57)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="col-md-12 outrosprodutos">
+                <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
+                <h5>Camâra QuartaKappa</h5>
+                <h3 class="orange">10€ / Dia</h3>
+                <p>Almada</p>
+                <img class="star-produto" src="~/images/Stars/4-star.png" /> (57)
+            </div>
+        </div>
+    </div>
+</div>

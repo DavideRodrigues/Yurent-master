@@ -1,0 +1,61 @@
+<div class="demo-section k-content">
+    <h4>Start date</h4>
+
+    @*@(Html.Kendo().DateTimePicker()
+          .Name("start")
+          .Value(DateTime.Today)
+          .Max(DateTime.Today)
+          .ParseFormats(new string[] { "MM/dd/yyyy" })
+          .Events(e => e.Change("startChange"))
+          .HtmlAttributes(new { style = "width:100%;" })
+    )
+
+    <h4 style="margin-top: 2em;">End date</h4>
+    @(Html.Kendo().DateTimePicker()
+          .Name("end")
+          .Value(DateTime.Today)
+          .Min(DateTime.Today)
+          .ParseFormats(new string[] { "MM/dd/yyyy" })
+          .Events(e => e.Change("endChange"))
+          .HtmlAttributes(new { style = "width:100%;" })
+    )*@
+</div>
+<script>
+	function startChange() {
+		var start = $("#start").data("kendoDateTimePicker");
+		var end = $("#end").data("kendoDateTimePicker");
+        var startDate = start.value();
+        var endDate = end.value();
+
+        if (startDate) {
+            startDate = new Date(startDate);
+            startDate.setDate(startDate.getDate());
+            end.min(startDate);
+        } else if (endDate) {
+            start.max(new Date(endDate));
+        } else {
+            endDate = new Date();
+            start.max(endDate);
+            end.min(endDate);
+        }
+    }
+
+    function endChange() {
+		var start = $("#start").data("kendoDateTimePicker");
+		var end = $("#end").data("kendoDateTimePicker");
+        var endDate = end.value();
+        var startDate = start.value();
+
+        if (endDate) {
+            endDate = new Date(endDate);
+            endDate.setDate(endDate.getDate());
+            start.max(endDate);
+        } else if (startDate) {
+            end.min(new Date(startDate));
+        } else {
+            endDate = new Date();
+            start.max(endDate);
+            end.min(endDate);
+        }
+    }
+</script>

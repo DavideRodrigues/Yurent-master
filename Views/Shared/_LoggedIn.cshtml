@@ -1,0 +1,78 @@
+﻿@{
+}
+
+
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <a class="navbar-brand" asp-controller="" asp-action="Index"><img width="70" height="50" src="~/images/logo.png" /></a>
+
+
+    @* VISIVEL APENAS NO PC *@
+    <div class="navbar-nav d-none d-md-flex">
+        <div class="navbar-nav align-items-center">
+            <div class="d-flex text-left">
+                <a class="nav-item nav-link" asp-controller="Painel" asp-action="Index">Painel</a>
+                <a class="nav-item nav-link" asp-controller="Anuncios" asp-action="MeusAnuncios">Meus Anuncios</a>
+                <a class="nav-item nav-link" asp-controller="Painel" asp-action="Index">Mensagens</a>
+                <a class="nav-item nav-link" asp-controller="Painel" asp-action="Index">Estatistícas</a>
+                <a class="nav-item nav-link" asp-controller="Anuncios" asp-action="AdicionarAnuncio">Anunciar</a>
+                <a class="nav-item nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Mais
+                </a>
+
+
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Index">FAQ</a>
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Index">Garantia</a>
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Index">Como Funciona</a>
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-end">
+                <div class="nav-item align-self-center">
+                    <a class="link" href="">Modo Comprador</a>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuAvatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="avatar" src="~/images/Avatar.png" />
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAvatar">
+                        <a class="dropdown-item" asp-controller="Perfil" asp-action="Index">Perfil</a>
+                        <a class="dropdown-item" asp-controller="Perfil" asp-action="GerirConta">Editar Conta</a>
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Index">Guardados</a>
+
+                        <hr />
+                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button id="logout" type="submit" class="dropdown-item">Sair</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*VISIVEL APENAS NO TELEMOVEL E TABLET*@
+    <div class="d-block d-md-none justify-self-end">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="navbar-nav">
+                <a class="nav-item link" asp-controller="Home" asp-action="Index">Modo Comprador</a>
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Painel</a>
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Meus Anuncios</a>
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Mensagens</a>
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Estatistícas</a>
+                <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Favoritos</a>
+                <a class="nav-item nav-link" asp-controller="Perfil" asp-action="EditarConta">Editar Perfil</a>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="dropdown-item">Sair</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</nav>

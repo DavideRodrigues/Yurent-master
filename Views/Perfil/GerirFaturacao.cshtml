@@ -1,0 +1,70 @@
+﻿@model YURent.Data.FaturacaoModel
+
+@{
+    ViewData["Title"] = "Faturação";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-xl-3 col-md-4 col-12 text-center">
+            <div class="shadow menu-editar">
+                <div class="container-perfil mb-3">
+                    <img class="avatar-perfil" src="~/images/avatar.png" />
+                    <div class="overlay">
+                        <a href="#" class="icon" title="Editar Imagem">
+                            <i class="fas fa-camera"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <br />
+                <a class="link-black" asp-action="GerirConta" asp-controller="Perfil">Conta</a>
+                <br />
+                <a class="orange" asp-action="GerirFaturacao" asp-controller="Perfil">Faturamento</a>
+                <br />
+                <a class="link-black" asp-action="GerirVerificacao" asp-controller="Perfil">Verificação</a>
+            </div>
+        </div>
+        <div class="col-xl-9 col-md-8 col-12">
+            <h4 class="display-4 text-center">Faturamento</h4>
+            <form method="post" asp-action="GerirFaturacao">
+                <div class="form-group">
+                    <label asp-for="Nome_completo"></label>
+                    <input asp-for="Nome_completo" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Nome_completo"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Morada"></label>
+                    <input asp-for="Morada" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Morada"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Codigo_Postal"></label>
+                    <input asp-for="Codigo_Postal" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Codigo_Postal"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Nif"></label>
+                    <input asp-for="Nif" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Nif"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Iban"></label>
+                    <input asp-for="Iban" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Iban"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Gravar Dados" class="btn btn-orange text-white" />
+                </div>
+
+                <input type="hidden" asp-for="Id_faturacao" />
+
+            </form>
+        </div>
+    </div>
+</div>

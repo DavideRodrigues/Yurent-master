@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container" id="inicio-pesquisa">
+    <h1 class="orange">Aluga tudo o que quiseres</h1>
+    <p>Alugar é 90% mais barato do que comprar</p>
+    <img src="~/images/drone.svg" id="imagem-drone" />
+
+    <form class="card card-sm" method="get" asp-action="ResultadoPesquisa" asp-controller="Home">
+        <div class="card-body row no-gutters align-items-center">
+            <div class="col-auto">
+                <i class="fas fa-search h4 text-body"></i>
+            </div>
+            <div class="col d-flex">
+                <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="O que procuras?" name="procuraString">
+                <button class="btn btn-lg btn-orange text-white" type="submit">Procurar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top" src="~/images/Categorias/cameras.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Câmaras</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top test-shine" src="~/images/Categorias/drones.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Drones</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top" src="~/images/Categorias/lentes.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Lentes</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top" src="~/images/Categorias/eletronica.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Eletrónica</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top" src="~/images/Categorias/projetores.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Projetores</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl-2 p-0">
+            <div class="m-2">
+                <div class="card categorias">
+                    <a asp-controller="" asp-action="">
+                        <img class="card-img-top" src="~/images/Categorias/instrumentos.jpg" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center text-black-50">Instrumentos</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="flex mt-5 text-justify">
+            <div class="mx-1 mx-md-3 mx-xl-5 mt-5 mt-5">
+                <h3>Ganha dinheiro com as tuas coisas</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
+            </div>
+            <img src="~/images/home/porquinho.svg" id="porquinho" />
+        </div>
+        <div class="flex mt-5 text-justify">
+            <img class="d-none d-md-flex" src="~/images/Home/desconto.svg" id="desconto" />
+            <div class="mx-1 mx-md-3 mx-xl-5 mt-5">
+                <h3>Alugar é 90% mais barato do que comprar</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
+            </div>
+            <img class="d-flex d-md-none" src="~/images/Home/desconto.svg" id="desconto" />
+        </div>
+    </div>
+
+</div>
