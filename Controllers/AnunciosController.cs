@@ -148,17 +148,81 @@ namespace YURent.Controllers
             return View(anuncios);
         }
 
+
+        #region Editar Anúncio
+
+
         [Route("EditarAnuncio/{id}", Name = "editarRoute")]
         public IActionResult EditarAnuncio(int id)
         {
+            if (_context.Anuncios.Where(a => a.Id_anuncio == id).Any())
+            {
 
+                var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
 
-            return View();
+                var newAnuncio = new AnunciosModel()
+                {
+                    Título = anuncio.Título,
+                    Descricao = anuncio.Descricao,
+                    Categoria = anuncio.Categoria,
+                    Preco_dia = anuncio.Preco_dia,
+                    UrlImagem = anuncio.UrlImagem,
+                    Id_anuncio = anuncio.Id_anuncio
+                };
+
+                return View(newAnuncio);
+
+            }
+            else
+            {
+                var model = new AnunciosModel();
+                return View(model);
+            }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("EditarAnuncio/{id}", Name = "editarRoute")]
+        public async Task<IActionResult> EditarAnuncio(AnunciosModel anuncio, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var anuncios = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
 
+                if (anuncio.Imagem != null)
+                {
+                    // Adicionar Nova Imagem
+                    string folder = "DBImages/anuncios/";
+                    folder += Guid.NewGuid().ToString() + "_" + anuncio.Imagem.FileName;
 
+                    string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folder);
 
+                    await anuncio.Imagem.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+                    anuncio.UrlImagem = "/" + folder;
 
+                    //Remover Imagem Atual
+                    if (System.IO.File.Exists(anuncios.UrlImagem))
+                    {
+                        System.IO.File.Delete(anuncios.UrlImagem);
+                    }
+                }
+
+                anuncios.Título = anuncio.Título;
+                anuncios.Descricao = anuncio.Descricao;
+                anuncios.Categoria = anuncio.Categoria;
+
+                if (anuncio.UrlImagem != null)
+                {
+                    anuncios.UrlImagem = anuncio.UrlImagem;
+                }
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("MeusAnuncios");
+        }
     }
+
+    #endregion
+
+
 }
