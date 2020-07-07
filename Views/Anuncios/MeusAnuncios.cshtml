@@ -26,11 +26,26 @@
                         <h5>@anuncio.Preco_dia€</h5>
                         <div class="d-flex">
                             <a asp-controller="Anuncios" asp-action="EditarAnuncio" asp-route-id="@anuncio.Id_anuncio"><i class="fas fa-pencil-alt icon-orange icon-orange-link mr-2"></i></a>
-                            <a><i class="fas fa-trash-alt icon-orange icon-orange-link"></i></a>
+                            <a data-toggle="modal" data-target="#uploadModal"><i class="fas fa-trash-alt icon-orange icon-orange-link"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="uploadModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <h4>Tens a certeza que quer eliminar o anúncio @anuncio.Título?</h4>
+                                <div class="d-flex text-center">
+                                    <a class="m-3 text-white btn btn-success" asp-controller="Anuncios" asp-action="EliminarAnuncio" asp-route-id="@anuncio.Id_anuncio">Sim</a>
+                                    <a class="m-3 text-white btn btn-danger" asp-controller="Anuncios" asp-action="MeusAnuncios" asp-route-id="@anuncio.Id_anuncio">Não</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             }
+
         </div>
     </div>
 </div>

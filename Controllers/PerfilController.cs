@@ -38,6 +38,8 @@ namespace YURent.Controllers
         public async Task<IActionResult> EditarFoto(UtilizadorModel model)
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
+
             if (ModelState.IsValid)
             {
                 if (model.ImagemPerfil != null)
@@ -49,8 +51,6 @@ namespace YURent.Controllers
 
                     string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folder);
                     await model.ImagemPerfil.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-
-                    var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
                     utilizador.UrlImagemPerfil = model.UrlImagemPerfil;
 
                     _context.Utilizador.Update(utilizador);
@@ -139,6 +139,7 @@ namespace YURent.Controllers
         public IActionResult GerirFaturacao()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
+
             // Enviar o objeto faturação
             if (_context.Faturacao.Where(a => a.Email == claimsidentity.Name).Any())
             {

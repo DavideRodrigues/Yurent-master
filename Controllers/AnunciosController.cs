@@ -91,7 +91,7 @@ namespace YURent.Controllers
             }
 
 
-            return RedirectToAction("Anuncio", model.Id_anuncio);
+            return RedirectToAction("MeusAnuncios");
         }
         #endregion
 
@@ -220,9 +220,23 @@ namespace YURent.Controllers
 
             return RedirectToAction("MeusAnuncios");
         }
+
+        #endregion
+
+        [Route("EliminarAnuncio/{id}", Name = "eliminarRoute")]
+        public IActionResult EliminarAnuncio(int id)
+        {
+            var anuncio = _context.Anuncios.Where(a => a.Id_anuncio == id);
+
+            if (System.IO.File.Exists(anuncio.UrlImagem))
+            {
+                System.IO.File.Delete(anuncio.UrlImagem);
+            }
+
+            _context.Anuncios.Remove(anuncio);
+            _context.SaveChanges();
+
+            return RedirectToAction("MeusAnuncios");
+        }
     }
-
-    #endregion
-
-
 }
