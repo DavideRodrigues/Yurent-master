@@ -154,7 +154,6 @@ namespace YURent.Controllers
                     Iban = faturação.Iban,
                     Email = faturação.Email,
                     Id_faturacao = faturação.Id_faturacao,
-                    utilizador = faturação.Utilizador
                     
                 };
 

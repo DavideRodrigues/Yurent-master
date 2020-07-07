@@ -26,7 +26,7 @@ namespace YURent.Data
 
         public string Email { get; set; }
 
-        public UtilizadorModel UtilizadorModel { get; set; }
+        public UtilizadorModel utilizador { get; set; }
     }
 }
 

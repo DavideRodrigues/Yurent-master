@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using YURent.Areas.Identity.Data;
 using YURent.Data;
 using YURent.Models;
 using YURent.Repository;
@@ -25,26 +27,27 @@ namespace YURent.Controllers
             this._hostEnvironment = hostEnvironment;
         }
 
-        public async Task<ViewResult> MeusAnuncios()
+        [Route("reservar/{id}/{inicio}/{fim}", Name = "reservarRoute")]
+        public async Task<ViewResult> Reservar(int id_anuncio, DateTime inicio, DateTime fim)
         {
-            var anuncios = new List<AnunciosModel>();
-            var allanuncios = await _context.Anuncios.ToListAsync();
-            if (allanuncios?.Any() == true)
+            var claimsidentity = User.Identity as ClaimsIdentity;
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
+            var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id_anuncio);
+
+            Reservas novaReserva = new Reservas()
             {
-                foreach (var anuncio in allanuncios)
-                {
-                    anuncios.Add(new AnunciosModel()
-                    {
-                        Id_anuncio = anuncio.Id_anuncio,
-                        Título = anuncio.Título,
-                        Descricao = anuncio.Descricao,
-                        Categoria = anuncio.Categoria,
-                        Preco_dia = anuncio.Preco_dia,
-                        UrlImagem = anuncio.UrlImagem,
-                    });
-                }
-            }
-            return View(anuncios);
+                Anuncio = anuncio,
+                Utilizador = utilizador,
+                Data_inicio = inicio,
+                Data_fim = fim,
+                Preco = anuncio.Preco_dia,
+                Cancelado = false
+            };
+
+            await _context.Reservas.AddAsync(novaReserva);
+            await _context.SaveChangesAsync();
+
+            return View();
         }
 
         public IActionResult AdicionarAnuncio()
@@ -90,9 +93,9 @@ namespace YURent.Controllers
 
             return RedirectToAction("Anuncio", model.Id_anuncio);
         }
+        #endregion
 
-
-        //
+        #region Detalhes Anuncio
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
@@ -111,27 +114,48 @@ namespace YURent.Controllers
                     UrlImagem = anuncio.UrlImagem
                 };
 
-                var views = new Anuncios
-                {
-                    Visualizacoes = anuncio.Visualizacoes + 1
-                };
-                _context.Anuncios.Update(views);
-                await _context.SaveChangesAsync();
                 return View(anuncioDetails);
             }
             return View();
         }
         #endregion
 
-        #region Meus Anúncios
+        public async Task<ViewResult> MeusAnuncios()
+        {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-        //public async Task<ViewResult> MeusAnuncios(int id)
-        //{
+            var anuncios = new List<AnunciosModel>();
 
-        //}
+            var meusanuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+
+            if (meusanuncios?.Any() == true)
+            {
+                foreach (var anuncio in meusanuncios)
+                {
+                    anuncios.Add(new AnunciosModel()
+                    {
+                        Id_anuncio = anuncio.Id_anuncio,
+                        Título = anuncio.Título,
+                        Descricao = anuncio.Descricao,
+                        Categoria = anuncio.Categoria,
+                        Preco_dia = anuncio.Preco_dia,
+                        UrlImagem = anuncio.UrlImagem
+                    });
+                }
+            }
+
+            return View(anuncios);
+        }
+
+        [Route("EditarAnuncio/{id}", Name = "editarRoute")]
+        public IActionResult EditarAnuncio(int id)
+        {
 
 
-        #endregion
+            return View();
+        }
+
 
 
 

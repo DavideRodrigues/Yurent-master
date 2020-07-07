@@ -13,8 +13,7 @@ namespace YURent.Data
     {
         [Key]
         public int Id_reserva { get; set; }
-        [ForeignKey("Id_anuncio")]
-        public int Id_anuncio { get; set; }
+        public AnunciosModel AnuncioModel { get; set; }
         
         [Display(Name = "Data de Inicio")]
         public DateTime Data_inicio { get; set; }

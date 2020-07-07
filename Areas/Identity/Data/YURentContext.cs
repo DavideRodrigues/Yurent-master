@@ -24,7 +24,6 @@ namespace YURent.Data
         public DbSet<Mensagens> Mensagens { get; set; }
         public DbSet<Utilizador> Utilizador { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

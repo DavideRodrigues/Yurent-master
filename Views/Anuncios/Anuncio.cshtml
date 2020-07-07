@@ -19,7 +19,6 @@
                     <h5 class="card-title">Detalhes de Aluguer</h5>
                     <div class="d-flex justify-content-between">
                         <p>Data:</p>
-                        @*@Html.Partial("rangeselection");*@ 
                         <p>01/02/2020 - 03/02/2020</p>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -38,7 +37,7 @@
                         @{double total = (preco + servico);}
                         <p>@total€</p>
                     </div>
-                    <a href="#" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
+                    <a asp-action="Reservar" asp-route-id="@Model.Id_anuncio" asp-route-inicio="01/01/2000" asp-route-fim="01/01/2000" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
                 </div>
             </div>
         </div>

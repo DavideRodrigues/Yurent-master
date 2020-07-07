@@ -277,7 +277,9 @@ footer a {
 
 .avatar-perfil {
     border-radius: 150px;
+    height: 200px;
     width: 200px;
+    object-fit: cover;
 }
 
 #desc-perfil {
@@ -322,7 +324,7 @@ footer a {
 }
 
 #imagem-anuncio {
-    width: 100%;
+    width: 250px;
     height: 150px;
     object-fit: cover;
 }
