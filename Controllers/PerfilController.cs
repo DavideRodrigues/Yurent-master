@@ -53,22 +53,22 @@ namespace YURent.Controllers
                     var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
                     utilizador.UrlImagemPerfil = model.UrlImagemPerfil;
 
-                    await _context.SaveChangesAsync();
+                    _context.Utilizador.Update(utilizador);
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
-            ViewBag.UrlImagem = model.UrlImagemPerfil;
+            
 
             if (ViewBag.Title == "Faturacao")
             {
-                return View("GerirFaturacao");
+                return RedirectToAction("GerirFaturacao");
             }
             else if (ViewBag.Title == "Verificacao")
             {
-                return View("GerirVerificacao");
+                return RedirectToAction("GerirVerificacao");
             }
-            return View("GerirConta");
+            return RedirectToAction("GerirConta");
         }
 
         #region GerirConta
@@ -85,7 +85,8 @@ namespace YURent.Controllers
                 {
                     Nome = utilizador.Nome,
                     Email = utilizador.Email,
-                    Id_utilizador = utilizador.Id_utilizador
+                    Id_utilizador = utilizador.Id_utilizador,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
                 return View(newUtilizador);
             }
@@ -152,7 +153,9 @@ namespace YURent.Controllers
                     Nif = faturação.Nif,
                     Iban = faturação.Iban,
                     Email = faturação.Email,
-                    Id_faturacao = faturação.Id_faturacao
+                    Id_faturacao = faturação.Id_faturacao,
+                    utilizador = faturação.Utilizador
+                    
                 };
 
                 return View(newFaturacao);
@@ -184,6 +187,7 @@ namespace YURent.Controllers
             {
                 var newFaturacao = new Faturacao()
                 {
+                    Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name),
                     Nome_completo = faturacao.Nome_completo,
                     Morada = faturacao.Morada,
                     Codigo_Postal = faturacao.Codigo_Postal,

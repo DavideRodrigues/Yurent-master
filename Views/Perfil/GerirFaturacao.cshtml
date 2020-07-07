@@ -4,19 +4,19 @@
     ViewData["Title"] = "Faturação";
 }
 
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-xl-3 col-md-4 col-12 text-center">
             <div class="shadow menu-editar">
                 <div class="container-perfil mb-3">
-                    <img class="avatar-perfil" src="~/images/avatar.png" />
+                    <img class="avatar-perfil" src="@Model.utilizador.UrlImagemPerfil" />
                     <div class="overlay">
-                        <a href="#" class="icon" title="Editar Imagem">
+                        <a class="icon" title="Editar Imagem" data-toggle="modal" data-target="#uploadModal">
                             <i class="fas fa-camera"></i>
                         </a>
                     </div>
                 </div>
-
                 <br />
                 <a class="link-black" asp-action="GerirConta" asp-controller="Perfil">Conta</a>
                 <br />

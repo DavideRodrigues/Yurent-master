@@ -12,7 +12,8 @@ namespace YURent.Data
     {
         [Key]
         public int Id_faturacao { get; set; }
-        
+
+        public UtilizadorModel utilizador { get; set; }
 
         [Display(Name = "Nome Completo")]
         [Required(ErrorMessage = "Por favor insira o seu Nome Completo")]
@@ -36,7 +37,6 @@ namespace YURent.Data
 
         public string Email { get; set; }
 
-        public int Id_utilizador { get; set; }
 
 
     }

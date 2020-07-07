@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using YURent.Models;
 
 namespace YURent.Data
 {
@@ -24,6 +25,8 @@ namespace YURent.Data
         public string Num_cc { get; set; }
 
         public string Email { get; set; }
+
+        public UtilizadorModel UtilizadorModel { get; set; }
     }
 }
 

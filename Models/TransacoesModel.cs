@@ -11,12 +11,11 @@ namespace YURent.Data
     {
         [Key]
         public int Id_transacoes { get; set; }
-        [ForeignKey("Id_reserva")]
-        public int Id_reserva { get; set; }
+
+        public ReservasModel ReservasModel { get; set; }
 
         public DateTime Data { get; set; }
 
-        public int Id_utilizador { get; set; }
 
     }
 }
