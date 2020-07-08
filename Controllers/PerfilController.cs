@@ -28,21 +28,21 @@ namespace YURent.Controllers
             _perfilRepository = perfilRepository;
         }
 
-        //[Route("perfil/{id}", Name = "perfilRoute")]
-        //public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
-        //{
-        //    var utilizador = await _context.Utilizador.FindAsync(id);
+        [Route("perfil/{id}", Name = "perfilRoute")]
+        public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
+        {
+            var utilizador = await _context.Utilizador.FindAsync(id);
 
-        //    var perfil = new UtilizadorModel()
-        //    {
-        //        Nome = utilizador.Nome,
-        //        Descricao = utilizador.Descricao,
-        //        UrlImagemPerfil = utilizador.UrlImagemPerfil,
-        //        Email = utilizador.Email,
-        //    };
+            var perfil = new UtilizadorModel()
+            {
+                Nome = utilizador.Nome,
+                Descricao = utilizador.Descricao,
+                UrlImagemPerfil = utilizador.UrlImagemPerfil,
+                Email = utilizador.Email,
+            };
 
-        //    return View(perfil);
-        //}
+            return View(perfil);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,16 +125,26 @@ namespace YURent.Controllers
                 };
 
                 _context.Utilizador.Add(newUtilizador);
+                _context.SaveChanges();
             }
             else
             {
                 var utiliza = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-                utiliza.Nome = utiliza.Nome;
+                var ImgUtilizador = new UtilizadorModel()
+                {
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
+                };
+
+
+                utiliza.Nome = utilizador.Nome;
+                utiliza.Descricao = utilizador.Descricao;
+
+                _context.SaveChanges();
+                return View(ImgUtilizador);
             }
 
-
-            _context.SaveChanges();
+           
             return View();
         }
         #endregion
@@ -148,11 +158,20 @@ namespace YURent.Controllers
             // Enviar o objeto faturação
             if (_context.Faturacao.Where(a => a.Email == claimsidentity.Name).Any())
             {
-                var faturação = _context.Faturacao.FirstOrDefault(a => a.Email == claimsidentity.Name);
+                var faturação = _context.Faturacao.Include(p => p.Utilizador).FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-
-                var newFaturacao = new FaturacaoModel()
+                UtilizadorModel utilizador = new UtilizadorModel()
                 {
+                    Id_utilizador = faturação.Utilizador.Id_utilizador,
+                    Nome = faturação.Utilizador.Nome,
+                    Descricao = faturação.Utilizador.Descricao,
+                    UrlImagemPerfil = faturação.Utilizador.UrlImagemPerfil,
+                    Email = faturação.Utilizador.Email
+                };
+
+                var novaFaturacao = new FaturacaoModel()
+                {
+                    Utilizador = utilizador,
                     Nome_completo = faturação.Nome_completo,
                     Morada = faturação.Morada,
                     Codigo_Postal = faturação.Codigo_Postal,
@@ -162,7 +181,7 @@ namespace YURent.Controllers
                     Id_faturacao = faturação.Id_faturacao
                 };
 
-                return View(newFaturacao);
+                return View(novaFaturacao);
             }
             else
             {
@@ -176,14 +195,6 @@ namespace YURent.Controllers
         [HttpPost]
         public IActionResult GerirFaturacao(FaturacaoModel faturacao)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    int id = _perfilRepository.EditarFaturacao(faturacao);
-            //    if (id > 0)
-            //    {
-            //        return RedirectToAction(nameof(EditarFaturacao));
-            //    }
-            //}
 
             var claimsidentity = User.Identity as ClaimsIdentity;
 

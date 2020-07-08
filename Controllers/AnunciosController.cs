@@ -100,13 +100,12 @@ namespace YURent.Controllers
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
-            var anuncio = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Utilizador.Id_utilizador == id );
+            var anuncio = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Id_anuncio == id);
 
             UtilizadorModel utilizador = new UtilizadorModel()
             {
                 Id_utilizador = anuncio.Utilizador.Id_utilizador,
                 Nome = anuncio.Utilizador.Nome,
-                Descricao = anuncio.Utilizador.Descricao,
                 UrlImagemPerfil = anuncio.Utilizador.UrlImagemPerfil,
                 Email = anuncio.Utilizador.Email
             };

@@ -35,8 +35,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body text-center">
-                                <h4 class="display-4">Tens a certeza que quer eliminar o anúncio @anuncio.Título?</h4>
-                                <div class="d-flex text-center">
+                                <p>Tens a certeza que quer eliminar o anúncio @anuncio.Título?</p>
+                                <div class="d-flex text-center align-items-center">
                                     <a class="m-1 text-white btn btn-orange" asp-controller="Anuncios" asp-action="EliminarAnuncio" asp-route-id="@anuncio.Id_anuncio">Sim</a>
                                     <a class="m-1 text-white btn btn-orange" asp-controller="Anuncios" asp-action="MeusAnuncios" asp-route-id="@anuncio.Id_anuncio">Não</a>
                                 </div>

@@ -9,7 +9,15 @@
         <div class="col-xl-3 col-md-4 col-12 text-center">
             <div class="shadow menu-editar">
                 <div class="container-perfil mb-3">
-                    <img class="avatar-perfil" src="@Model.UrlImagemPerfil" />
+                    @if(@Model.UrlImagemPerfil != null)
+                    {
+                        <img class="avatar-perfil" src="@Model.UrlImagemPerfil" />
+                    }
+                    else
+                    {
+                        <img class="avatar-perfil" src="~/images/imagem_perfil" />
+                    }
+
                     <div class="overlay">
                         <a class="icon" title="Editar Imagem" data-toggle="modal" data-target="#uploadModal">
                             <i class="fas fa-camera"></i>

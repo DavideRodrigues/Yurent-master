@@ -6,14 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using YURent.Models;
 
-namespace YURent.Data
+namespace YURent.Models
 {
     public class FaturacaoModel
     {
         [Key]
         public int Id_faturacao { get; set; }
 
-        public UtilizadorModel utilizador { get; set; }
+        public UtilizadorModel Utilizador { get; set; }
 
         [Display(Name = "Nome Completo")]
         [Required(ErrorMessage = "Por favor insira o seu Nome Completo")]

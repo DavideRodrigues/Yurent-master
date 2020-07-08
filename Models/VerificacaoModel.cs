@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YURent.Models;
 
-namespace YURent.Data
+namespace YURent.Models
 {
     public class VerificacaoModel
     {
@@ -26,7 +26,7 @@ namespace YURent.Data
 
         public string Email { get; set; }
 
-        public UtilizadorModel utilizador { get; set; }
+        public UtilizadorModel Utilizador { get; set; }
     }
 }
 

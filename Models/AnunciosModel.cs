@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YURent.Models;
 
-namespace YURent.Data
+namespace YURent.Models
 {
     public class AnunciosModel
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YURent.Areas.Identity.Data;
 using YURent.Data;
+using YURent.Models;
 
 namespace YURent.Repository
 {
