@@ -28,11 +28,21 @@ namespace YURent.Controllers
             _perfilRepository = perfilRepository;
         }
 
-        public IActionResult Index() // ENTRAR NO PAINEL
-        {
+        //[Route("perfil/{id}", Name = "perfilRoute")]
+        //public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
+        //{
+        //    var utilizador = await _context.Utilizador.FindAsync(id);
 
-            return View();
-        }
+        //    var perfil = new UtilizadorModel()
+        //    {
+        //        Nome = utilizador.Nome,
+        //        Descricao = utilizador.Descricao,
+        //        UrlImagemPerfil = utilizador.UrlImagemPerfil,
+        //        Email = utilizador.Email,
+        //    };
+
+        //    return View(perfil);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,6 +97,7 @@ namespace YURent.Controllers
                     Nome = utilizador.Nome,
                     Email = utilizador.Email,
                     Id_utilizador = utilizador.Id_utilizador,
+                    Descricao = utilizador.Descricao,
                     UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
                 return View(newUtilizador);
@@ -109,6 +120,7 @@ namespace YURent.Controllers
                 var newUtilizador = new Utilizador()
                 {
                     Nome = utilizador.Nome,
+                    Descricao = utilizador.Descricao,
                     Email = claimsidentity.Name
                 };
 
@@ -147,8 +159,7 @@ namespace YURent.Controllers
                     Nif = faturação.Nif,
                     Iban = faturação.Iban,
                     Email = faturação.Email,
-                    Id_faturacao = faturação.Id_faturacao,
-                    
+                    Id_faturacao = faturação.Id_faturacao
                 };
 
                 return View(newFaturacao);

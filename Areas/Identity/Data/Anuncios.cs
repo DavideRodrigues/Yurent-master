@@ -8,8 +8,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using YURent.Areas.Identity.Data;
+using YURent.Models;
 
-namespace YURent.Data
+namespace YURent.Areas.Identity.Data
+
 {
     public class Anuncios
     {
@@ -31,6 +33,5 @@ namespace YURent.Data
 
         public bool Ativo { get; set; }
         public DateTime Data_publicacao { get; set; }
-
     }
 }

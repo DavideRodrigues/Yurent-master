@@ -1,6 +1,6 @@
 ﻿@model YURent.Data.AnunciosModel
 
-@{          
+@{
     ViewData["Title"] = "Anuncio";
 }
 
@@ -63,10 +63,10 @@
                 <div class="p-2">
                     <p class="font-weight-bold mb-0">@Model.Utilizador.Nome<i class="ml-1 fas fa-check-circle margin"></i></p>
                     <img class="star-anuncio" src="~/images/stars/5-star.png" /> (28)
-                    @*<p>Tenho coisas extras e sei que vão perder o valor vender por isso pensei porque não alugá-las?</p>*@
+                    <p>Tenho coisas extras e sei que vão perder o valor vender por isso pensei porque não alugá-las?</p>
                 </div>
             </div>
-            <a class="btn btn-orange-outline" href="#">Contactar @Model.Utilizador.Nome</a> @* Entrar no chat com o alugador *@
+            <a class="btn btn-orange-outline" href="#">Contactar o @Model.Utilizador.Nome</a> @* Entrar no chat com o alugador *@
 
             <hr />
 

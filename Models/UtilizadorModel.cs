@@ -14,6 +14,7 @@ namespace YURent.Models
         [Key]
         public int Id_utilizador { get; set; }
         public string Nome { get; set; }
+        public string Descricao { get; set; }
         public IFormFile ImagemPerfil { get; set; }     
         public string UrlImagemPerfil { get; set; }
         public string Email { get; set; }

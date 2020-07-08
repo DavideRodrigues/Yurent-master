@@ -53,6 +53,7 @@ namespace YURent.Controllers
         public IActionResult AdicionarAnuncio()
         {
             return View();
+
         }
 
         #region Adicionar anúncio
@@ -99,13 +100,22 @@ namespace YURent.Controllers
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
-            var anuncio = await _context.Anuncios.FindAsync(id);
+            var anuncio = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Utilizador.Id_utilizador == id );
+
+            UtilizadorModel utilizador = new UtilizadorModel()
+            {
+                Id_utilizador = anuncio.Utilizador.Id_utilizador,
+                Nome = anuncio.Utilizador.Nome,
+                Descricao = anuncio.Utilizador.Descricao,
+                UrlImagemPerfil = anuncio.Utilizador.UrlImagemPerfil,
+                Email = anuncio.Utilizador.Email
+            };
 
             if (anuncio != null)
             {
-                var anuncioDetails = new Anuncios()
+                var anuncioDetails = new AnunciosModel()
                 {
-                    Utilizador = anuncio.Utilizador,
+                    Utilizador = utilizador,
                     Id_anuncio = anuncio.Id_anuncio,
                     Título = anuncio.Título,
                     Descricao = anuncio.Descricao,
@@ -230,7 +240,7 @@ namespace YURent.Controllers
         {
             var anuncio = _context.Anuncios.Where(a => a.Id_anuncio == id).FirstOrDefault();
 
-         
+
 
             if (System.IO.File.Exists(anuncio.UrlImagem))
             {
