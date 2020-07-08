@@ -100,7 +100,8 @@ namespace YURent.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        //return LocalRedirect(returnUrl);
+                        return RedirectToAction("CriarUtilizador");
                     }
                 }
                 foreach (var error in result.Errors)
@@ -110,7 +111,7 @@ namespace YURent.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return RedirectToAction("CriarUtilizador");
         }
     }
 }

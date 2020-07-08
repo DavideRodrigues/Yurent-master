@@ -99,13 +99,13 @@ namespace YURent.Controllers
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
-
             var anuncio = await _context.Anuncios.FindAsync(id);
 
             if (anuncio != null)
             {
-                var anuncioDetails = new AnunciosModel()
+                var anuncioDetails = new Anuncios()
                 {
+                    Utilizador = anuncio.Utilizador,
                     Id_anuncio = anuncio.Id_anuncio,
                     Título = anuncio.Título,
                     Descricao = anuncio.Descricao,
@@ -223,10 +223,14 @@ namespace YURent.Controllers
 
         #endregion
 
+        //                                         ERRO ERRO AQUI OLHA PARA ESTE ERRO ERRO ERRO ERRO ERRO
+
         [Route("EliminarAnuncio/{id}", Name = "eliminarRoute")]
         public IActionResult EliminarAnuncio(int id)
         {
-            var anuncio = _context.Anuncios.Where(a => a.Id_anuncio == id);
+            var anuncio = _context.Anuncios.Where(a => a.Id_anuncio == id).FirstOrDefault();
+
+         
 
             if (System.IO.File.Exists(anuncio.UrlImagem))
             {

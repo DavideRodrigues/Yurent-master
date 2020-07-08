@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using YURent.Areas.Identity.Data;
 using YURent.Data;
+using YURent.Models;
 
 namespace YURent.Controllers
 {
@@ -27,6 +30,63 @@ namespace YURent.Controllers
         {
             return View();
         }
+
+        public IActionResult CriarUtilizador()
+        {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+
+            if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
+            {
+                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+                var newUtilizador = new UtilizadorModel()
+                {
+                    Nome = utilizador.Nome,
+                    Email = utilizador.Email,
+                    Id_utilizador = utilizador.Id_utilizador,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
+                };
+                return View(newUtilizador);
+            }
+            else
+            {
+                var model = new UtilizadorModel();
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CriarUtilizador(UtilizadorModel utilizador)
+        {
+
+            var claimsidentity = User.Identity as ClaimsIdentity;
+
+            if (!_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
+            {
+                var newUtilizador = new Utilizador()
+                {
+                    Nome = utilizador.Nome,
+                    Email = claimsidentity.Name
+                };
+
+                _context.Utilizador.Add(newUtilizador);
+            }
+            else
+            {
+                var utiliza = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+                utiliza.Nome = utiliza.Nome;
+            }
+
+
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
 
 
         public async Task<ViewResult> ResultadoPesquisa(string procuraString)

@@ -30,6 +30,7 @@ namespace YURent.Controllers
 
         public IActionResult Index() // ENTRAR NO PAINEL
         {
+
             return View();
         }
 
@@ -100,14 +101,6 @@ namespace YURent.Controllers
         [HttpPost]
         public IActionResult GerirConta(UtilizadorModel utilizador)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    int id = _perfilRepository.EditarFaturacao(faturacao);
-            //    if (id > 0)
-            //    {
-            //        return RedirectToAction(nameof(EditarFaturacao));
-            //    }
-            //}
 
             var claimsidentity = User.Identity as ClaimsIdentity;
 
@@ -274,6 +267,7 @@ namespace YURent.Controllers
             return View();
         }
         #endregion
+
 
     }
 }

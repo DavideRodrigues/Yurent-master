@@ -5,7 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using YURent.Areas.Identity.Data;
 using YURent.Data;
+using YURent.Models;
 
 namespace YURent.Controllers
 {
@@ -22,6 +24,10 @@ namespace YURent.Controllers
         {
             return View();
         }
+
+        
+       
+
 
 
     }
