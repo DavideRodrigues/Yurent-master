@@ -47,6 +47,7 @@ namespace YURent.Controllers
                         Categoria = anuncio.Categoria,
                         Preco_dia = anuncio.Preco_dia,
                         UrlImagem = anuncio.UrlImagem,
+                        Localizacao = anuncio.Localizacao,
                         Ativo = anuncio.Ativo,
                         Data_publicacao = anuncio.Data_publicacao
                     });

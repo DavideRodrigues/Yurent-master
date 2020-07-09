@@ -23,6 +23,7 @@ namespace YURent.Data
         public DbSet<Transacoes> Transacoes { get; set; }
         public DbSet<Mensagens> Mensagens { get; set; }
         public DbSet<Utilizador> Utilizador { get; set; }
+        public DbSet<Guardados> Guardados { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

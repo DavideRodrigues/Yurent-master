@@ -23,11 +23,7 @@ namespace YURent.Controllers
         public IActionResult Index() // ENTRAR NO PAINEL
         {
             return View();
-        }
-
-        
-       
-
+        }     
 
 
     }

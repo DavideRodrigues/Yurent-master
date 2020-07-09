@@ -117,6 +117,7 @@ namespace YURent.Controllers
                         Categoria = anuncio.Categoria,
                         Preco_dia = anuncio.Preco_dia,
                         UrlImagem = anuncio.UrlImagem,
+                        Localizacao = anuncio.Localizacao,
                         Ativo = anuncio.Ativo,
                         Data_publicacao = anuncio.Data_publicacao
                     });
@@ -126,9 +127,11 @@ namespace YURent.Controllers
                 {
                     AnunciosModel = anunciosModel,
                     Id_utilizador = anuncioAtual.Utilizador.Id_utilizador,
+                    Descricao = anuncioAtual.Utilizador.Descricao,
                     Nome = anuncioAtual.Utilizador.Nome,
                     UrlImagemPerfil = anuncioAtual.Utilizador.UrlImagemPerfil,
                     Email = anuncioAtual.Utilizador.Email
+                    
                 };
 
                 var DetalhesAnuncio = new AnunciosModel()
@@ -139,6 +142,7 @@ namespace YURent.Controllers
                     Descricao = anuncioAtual.Descricao,
                     Categoria = anuncioAtual.Categoria,
                     Preco_dia = anuncioAtual.Preco_dia,
+                    Localizacao = anuncioAtual.Localizacao,
                     UrlImagem = anuncioAtual.UrlImagem
                 };
 

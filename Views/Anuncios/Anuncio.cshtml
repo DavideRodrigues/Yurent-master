@@ -51,7 +51,7 @@
             @* LOCALIZAÇÃO *@
             <h3>Localização</h3>
             <p class="text-grey">
-                Lisboa - Bairro Alto
+                @Model.Localizacao
             </p>
             <hr />
             @* FALA COM O SERAFIM *@
@@ -90,19 +90,20 @@
     @* Outros Produtos *@
     <h3>Outros produtos de Serafim</h3>
     <div class="row mt-2">
-        <div class="col-12 col-md-12">
-            <div class="flex">
-                @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
-                {
+        <div class="col-12">
+
+            @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
+            {
+                <div class="flex">
                     <div class="outrosprodutos mx-md-2">
                         <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
                         <h5>@anuncio.Título</h5>
                         <h4 class="orange">@anuncio.Preco_dia€ / Dia</h4>
-                        <p>Almada</p>
+                        <p>@anuncio.Localizacao</p>
                         <img class="star-produto" src="~/images/Stars/5-star.png" />
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
 </div>
