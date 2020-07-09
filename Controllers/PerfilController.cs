@@ -61,10 +61,9 @@ namespace YURent.Controllers
                     Email = utilizador.Email,
                     Data_criacao = utilizador.Data_criacao
                 };
+                return View(perfil);
             }
-
-
-            return View(perfil);
+            return View();
         }
 
         [HttpPost]

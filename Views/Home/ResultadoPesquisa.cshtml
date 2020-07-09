@@ -21,12 +21,7 @@
 <div class="container">
     <div class="row">
         <div class="form-group col-md-3 mt-2">
-            <form asp-action="PesquisarCategoria" method="post" id="categoriasform">
-                <label for="SelectCategoria">Categoria</label>
-                <input type="text">
-                <input type="submit">
-            </form>
-            <select onchange="this.form.submit()" class="form-control" id="SelectCategoria" form="categoriasform">
+            <select class="form-control" id="SelectCategoria">
                 <option value="Câmeras">Câmeras</option>
                 <option value="Drones">Drones</option>
                 <option value="Lentes">Lentes</option>

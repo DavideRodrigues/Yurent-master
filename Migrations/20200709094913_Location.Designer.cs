@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YURent.Data;
 
 namespace YURent.Migrations
 {
     [DbContext(typeof(YURentContext))]
-    partial class YURentContextModelSnapshot : ModelSnapshot
+    [Migration("20200709094913_Location")]
+    partial class Location
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,9 +173,6 @@ namespace YURent.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Localizacao")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Preco_dia")
@@ -344,6 +343,9 @@ namespace YURent.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Localizacao")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")

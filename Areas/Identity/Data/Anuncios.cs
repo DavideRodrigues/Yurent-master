@@ -24,7 +24,7 @@ namespace YURent.Areas.Identity.Data
         public string Descricao { get; set; }
         
         public string Categoria { get; set; }
-        
+        public string Localizacao { get; set; }
         public float Preco_dia { get; set; }
         
         public int Visualizacoes { get; set; }

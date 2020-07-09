@@ -25,6 +25,8 @@ namespace YURent.Models
 
         public string Categoria { get; set; }
 
+        public string Localizacao { get; set; }
+
         [Display(Name = "Preço por dia")]
         [Required(ErrorMessage = "Por favor insira o preço por dia")]
         public float Preco_dia { get; set; }

@@ -45,10 +45,36 @@
                 <input asp-for="Imagem" class="custom-file-input" id="validatedCustomFile" accept=".png, .jpg, .jpeg">
                 <label class="custom-file-label" for="validatedCustomFile">Escolhe uma Imagem...</label>
             </div>
-                
+
             <span asp-validation-for="Imagem"></span>
         </div>
 
+        <div class="form-group">
+            <label asp-for="Localizacao"></label>
+            <select id="select1" class="form-control" asp-for="Localizacao">
+                <option selected disabled> Escolher Distrito </option>
+                <option>Aveiro</option>
+                <option>Beja</option>
+                <option>Braga</option>
+                <option>Castelo Branco</option>
+                <option>Coimbra</option>
+                <option>Évora</option>
+                <option>Faro</option>
+                <option>Guarda</option>
+                <option>Leiria</option>
+                <option>Lisboa</option>
+                <option>Portalegre</option>
+                <option>Porto</option>
+                <option>Santarém</option>
+                <option>Setúbal</option>
+                <option>Viana do Castelo</option>
+                <option>Vila Real</option>
+                <option>Viseu</option>
+
+            </select>
+
+            <span asp-validation-for="Localizacao"></span>
+        </div>
 
         <div class="form-group">
             <input type="submit" value="Adicionar" class="btn btn-orange text-white" />

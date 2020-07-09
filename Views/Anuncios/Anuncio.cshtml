@@ -57,7 +57,7 @@
             @* FALA COM O SERAFIM *@
             <h3>Fala com @Model.Utilizador.Nome</h3>
             <div class="d-flex mt-2">
-                <a asp-controller="home" asp-action="perfil" asp-route-id="@Model.Utilizador.Id_utilizador">
+                <a asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.Utilizador.Id_utilizador">
                     <img class="avatar-anuncio" src="@Model.Utilizador.UrlImagemPerfil" />
                 </a>
                 <div class="p-2">
@@ -92,7 +92,7 @@
     <div class="row mt-2">
         <div class="col-12 col-md-12">
             <div class="flex">
-                @foreach (var anuncio in @Model.Utilizador.Anuncios)
+                @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
                 {
                     <div class="outrosprodutos mx-md-2">
                         <img src="@anuncio.UrlImagem" id="imagem-anuncio" />

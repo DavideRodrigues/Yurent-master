@@ -17,8 +17,7 @@ namespace YURent.Areas.Identity.Data
         public string Descricao { get; set; }
         public string UrlImagemPerfil { get; set; }
         public string Email { get; set; }
-        public string Localizacao { get; set; }
-
+        
         [DisplayFormat(DataFormatString = "{0:MMM-yyyy}")]
         public DateTime Data_criacao { get; set; }
         public List<Anuncios> Anuncios { get; set; }

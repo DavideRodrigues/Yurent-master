@@ -53,7 +53,6 @@ namespace YURent.Controllers
         public IActionResult AdicionarAnuncio()
         {
             return View();
-
         }
 
         #region Adicionar anúncio
@@ -83,7 +82,8 @@ namespace YURent.Controllers
                         Categoria = model.Categoria,
                         Preco_dia = model.Preco_dia,
                         Data_publicacao = DateTime.UtcNow,
-                        UrlImagem = model.UrlImagem
+                        UrlImagem = model.UrlImagem,
+                        Localizacao = model.Localizacao
                     };
 
                     await _context.Anuncios.AddAsync(novoAnuncio);
@@ -102,10 +102,10 @@ namespace YURent.Controllers
         {
             var anuncioAtual = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Id_anuncio == id);
 
-            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == anuncioAtual.Utilizador).ToListAsync();
             var anunciosModel = new List<AnunciosModel>();
 
-            if (utilizador != null)
+            if (anuncioAtual != null)
             {
                 foreach (var anuncio in anuncios)
                 {
@@ -131,24 +131,23 @@ namespace YURent.Controllers
                     Email = anuncioAtual.Utilizador.Email
                 };
 
-                if (anuncio != null)
+                var DetalhesAnuncio = new AnunciosModel()
                 {
-                    var DetalhesAnuncio = new AnunciosModel()
-                    {
-                        Utilizador = utilizador,
-                        Id_anuncio = anuncioAtual.Id_anuncio,
-                        Título = anuncioAtual.Título,
-                        Descricao = anuncioAtual.Descricao,
-                        Categoria = anuncioAtual.Categoria,
-                        Preco_dia = anuncioAtual.Preco_dia,
-                        UrlImagem = anuncioAtual.UrlImagem
-                    };
+                    Utilizador = utilizador,
+                    Id_anuncio = anuncioAtual.Id_anuncio,
+                    Título = anuncioAtual.Título,
+                    Descricao = anuncioAtual.Descricao,
+                    Categoria = anuncioAtual.Categoria,
+                    Preco_dia = anuncioAtual.Preco_dia,
+                    UrlImagem = anuncioAtual.UrlImagem
+                };
 
-                    return View(DetalhesAnuncio);
-                }
-                return View();
+                return View(DetalhesAnuncio);
             }
-            #endregion
+            return View();
+        }
+
+#endregion
 
             public async Task<ViewResult> MeusAnuncios()
             {
@@ -170,14 +169,15 @@ namespace YURent.Controllers
                             Descricao = anuncio.Descricao,
                             Categoria = anuncio.Categoria,
                             Preco_dia = anuncio.Preco_dia,
-                            UrlImagem = anuncio.UrlImagem
+                            UrlImagem = anuncio.UrlImagem,
+                            Localizacao = anuncio.Localizacao
                         });
                     }
                 }
 
                 return View(anuncios);
             } 
-        }
+        
 
 
         #region Editar Anúncio
@@ -198,7 +198,8 @@ namespace YURent.Controllers
                     Categoria = anuncio.Categoria,
                     Preco_dia = anuncio.Preco_dia,
                     UrlImagem = anuncio.UrlImagem,
-                    Id_anuncio = anuncio.Id_anuncio
+                    Id_anuncio = anuncio.Id_anuncio,
+                    Localizacao = anuncio.Localizacao
                 };
 
                 return View(newAnuncio);
@@ -241,6 +242,7 @@ namespace YURent.Controllers
                 anuncios.Título = anuncio.Título;
                 anuncios.Descricao = anuncio.Descricao;
                 anuncios.Categoria = anuncio.Categoria;
+                anuncio.Localizacao = anuncio.Localizacao;
 
                 if (anuncio.UrlImagem != null)
                 {

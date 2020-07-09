@@ -49,11 +49,34 @@
             <span asp-validation-for="Imagem"></span>
         </div>
 
-
         <div class="form-group">
-            <input type="submit" value="Editar" class="btn btn-orange text-white" />
-        </div>
-        <h4>@ViewBag.message</h4>
+            <label asp-for="Localizacao"></label>
+            <select id="select1" class="form-control" asp-for="Localizacao">
+                <option selected disabled> Escolher Distrito </option>
+                <option>Aveiro</option>
+                <option>Beja</option>
+                <option>Braga</option>
+                <option>Castelo Branco</option>
+                <option>Coimbra</option>
+                <option>Évora</option>
+                <option>Faro</option>
+                <option>Guarda</option>
+                <option>Leiria</option>
+                <option>Lisboa</option>
+                <option>Portalegre</option>
+                <option>Porto</option>
+                <option>Santarém</option>
+                <option>Setúbal</option>
+                <option>Viana do Castelo</option>
+                <option>Vila Real</option>
+                <option>Viseu</option>
+
+            </select>
+
+            <div class="form-group">
+                <input type="submit" value="Editar" class="btn btn-orange text-white" />
+            </div>
+            <h4>@ViewBag.message</h4>
 
     </form>
 </div>
