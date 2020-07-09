@@ -12,6 +12,7 @@
         <div class="col-12 col-md-7 m-0">
             <img class="d-block w-100 imagem-teste" src="@Model.UrlImagem" />
         </div>
+
         <div class="col-md-5 d-none d-md-block position-sticky">
             @* MENU LATERAL PARA ALUGAR *@
             <div class="card" style="position:fixed; width: 19rem;">
@@ -43,6 +44,9 @@
         </div>
 
         <div class="col-12 col-md-7 d-block mt-2">
+
+            <a asp-controller="Anuncios" asp-action="Guardados" asp-route-id="@Model.Id_anuncio" class="card-link btn btn-orange-outline">Guardar</a>
+
             <h3>Descrição</h3>
             <p class="text-grey">
                 @Model.Descricao
@@ -91,10 +95,9 @@
     <h3>Outros produtos de Serafim</h3>
     <div class="row mt-2">
         <div class="col-12">
-
-            @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
-            {
-                <div class="flex">
+            <div class="flex">
+                @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
+                {
                     <div class="outrosprodutos mx-md-2">
                         <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
                         <h5>@anuncio.Título</h5>
@@ -102,8 +105,8 @@
                         <p>@anuncio.Localizacao</p>
                         <img class="star-produto" src="~/images/Stars/5-star.png" />
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>

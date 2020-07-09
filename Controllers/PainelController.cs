@@ -22,9 +22,12 @@ namespace YURent.Controllers
 
         public IActionResult Index() // ENTRAR NO PAINEL
         {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+
+
+
             return View();
         }     
-
 
     }
 }

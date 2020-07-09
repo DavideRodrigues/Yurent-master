@@ -109,18 +109,22 @@ namespace YURent.Controllers
             {
                 foreach (var anuncio in anuncios)
                 {
-                    anunciosModel.Add(new AnunciosModel()
+                    if(anuncio.Id_anuncio != id)
                     {
-                        Id_anuncio = anuncio.Id_anuncio,
-                        Título = anuncio.Título,
-                        Descricao = anuncio.Descricao,
-                        Categoria = anuncio.Categoria,
-                        Preco_dia = anuncio.Preco_dia,
-                        UrlImagem = anuncio.UrlImagem,
-                        Localizacao = anuncio.Localizacao,
-                        Ativo = anuncio.Ativo,
-                        Data_publicacao = anuncio.Data_publicacao
-                    });
+                        anunciosModel.Add(new AnunciosModel()
+                        {
+                            Id_anuncio = anuncio.Id_anuncio,
+                            Título = anuncio.Título,
+                            Descricao = anuncio.Descricao,
+                            Categoria = anuncio.Categoria,
+                            Preco_dia = anuncio.Preco_dia,
+                            UrlImagem = anuncio.UrlImagem,
+                            Localizacao = anuncio.Localizacao,
+                            Ativo = anuncio.Ativo,
+                            Data_publicacao = anuncio.Data_publicacao
+                        });
+                    }
+
                 }
 
                 UtilizadorModel utilizador = new UtilizadorModel()
@@ -279,5 +283,35 @@ namespace YURent.Controllers
 
             return RedirectToAction("MeusAnuncios");
         }
+
+
+        [Route("guardados/{id}", Name = "guardarRoute")]
+        public async Task<ViewResult> Guardados(int id)
+        {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+
+            var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+            var guardar = new Guardados()
+            {
+                Utilizador = utilizador,
+                Anuncios = anuncio
+            };
+
+            if (_context.Guardados.Where(a => a.Utilizador == utilizador && a.Anuncios == anuncio).Any())
+            {
+                _context.Guardados.Remove(guardar);
+            }
+            else
+            {
+                await _context.Guardados.AddAsync(guardar);
+                await _context.SaveChangesAsync();
+            }
+            return View("Guardados");
+        }
+
+
+
     }
 }

@@ -314,5 +314,40 @@ namespace YURent.Controllers
         #endregion
 
 
+        // FAZER FAJOFJSOFJAOFJO
+        public async Task<ViewResult> Guardados()
+        {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+            if(_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
+            {
+                var GuardadosModel = new List<GuardadosModel>();
+                var Guardados = await _context.Guardados.Where(a => a.Utilizador == utilizador).ToListAsync();
+
+                foreach (var Guardado in Guardados)
+                {
+                    var anuncio = new AnunciosModel()
+                    {
+                        Título = Guardado.Anuncios.Título,
+                        Descricao = Guardado.Anuncios.Descricao,
+                        Categoria = Guardado.Anuncios.Categoria,
+                        Localizacao = Guardado.Anuncios.Localizacao,
+                        Preco_dia = Guardado.Anuncios.Preco_dia,
+                        UrlImagem = Guardado.Anuncios.UrlImagem,
+                        Data_publicacao = Guardado.Anuncios.Data_publicacao
+                    };
+
+
+                    GuardadosModel.Add(new GuardadosModel()
+                    {
+                        Anuncios = anuncio
+
+                    });
+                }
+                return View(GuardadosModel);
+            }
+
+            return View();
+        } 
     }
 }
