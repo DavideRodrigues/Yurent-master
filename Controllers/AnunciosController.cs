@@ -34,7 +34,7 @@ namespace YURent.Controllers
             var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
             var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id_anuncio);
 
-            Reservas novaReserva = new Reservas()
+            Reservas novaReserva = new Reservas
             {
                 Anuncio = anuncio,
                 Utilizador = utilizador,
@@ -100,61 +100,83 @@ namespace YURent.Controllers
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
-            var anuncio = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Id_anuncio == id);
+            var anuncioAtual = _context.Anuncios.Include(p => p.Utilizador).FirstOrDefault(a => a.Id_anuncio == id);
 
-            UtilizadorModel utilizador = new UtilizadorModel()
-            {
-                Id_utilizador = anuncio.Utilizador.Id_utilizador,
-                Nome = anuncio.Utilizador.Nome,
-                UrlImagemPerfil = anuncio.Utilizador.UrlImagemPerfil,
-                Email = anuncio.Utilizador.Email
-            };
+            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+            var anunciosModel = new List<AnunciosModel>();
 
-            if (anuncio != null)
+            if (utilizador != null)
             {
-                var anuncioDetails = new AnunciosModel()
+                foreach (var anuncio in anuncios)
                 {
-                    Utilizador = utilizador,
-                    Id_anuncio = anuncio.Id_anuncio,
-                    Título = anuncio.Título,
-                    Descricao = anuncio.Descricao,
-                    Categoria = anuncio.Categoria,
-                    Preco_dia = anuncio.Preco_dia,
-                    UrlImagem = anuncio.UrlImagem
-                };
-
-                return View(anuncioDetails);
-            }
-            return View();
-        }
-        #endregion
-
-        public async Task<ViewResult> MeusAnuncios()
-        {
-            var claimsidentity = User.Identity as ClaimsIdentity;
-            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-            var anuncios = new List<AnunciosModel>();
-
-            var meusanuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
-
-            if (meusanuncios?.Any() == true)
-            {
-                foreach (var anuncio in meusanuncios)
-                {
-                    anuncios.Add(new AnunciosModel()
+                    anunciosModel.Add(new AnunciosModel()
                     {
                         Id_anuncio = anuncio.Id_anuncio,
                         Título = anuncio.Título,
                         Descricao = anuncio.Descricao,
                         Categoria = anuncio.Categoria,
                         Preco_dia = anuncio.Preco_dia,
-                        UrlImagem = anuncio.UrlImagem
+                        UrlImagem = anuncio.UrlImagem,
+                        Ativo = anuncio.Ativo,
+                        Data_publicacao = anuncio.Data_publicacao
                     });
                 }
-            }
 
-            return View(anuncios);
+                UtilizadorModel utilizador = new UtilizadorModel()
+                {
+                    AnunciosModel = anunciosModel,
+                    Id_utilizador = anuncioAtual.Utilizador.Id_utilizador,
+                    Nome = anuncioAtual.Utilizador.Nome,
+                    UrlImagemPerfil = anuncioAtual.Utilizador.UrlImagemPerfil,
+                    Email = anuncioAtual.Utilizador.Email
+                };
+
+                if (anuncio != null)
+                {
+                    var DetalhesAnuncio = new AnunciosModel()
+                    {
+                        Utilizador = utilizador,
+                        Id_anuncio = anuncioAtual.Id_anuncio,
+                        Título = anuncioAtual.Título,
+                        Descricao = anuncioAtual.Descricao,
+                        Categoria = anuncioAtual.Categoria,
+                        Preco_dia = anuncioAtual.Preco_dia,
+                        UrlImagem = anuncioAtual.UrlImagem
+                    };
+
+                    return View(DetalhesAnuncio);
+                }
+                return View();
+            }
+            #endregion
+
+            public async Task<ViewResult> MeusAnuncios()
+            {
+                var claimsidentity = User.Identity as ClaimsIdentity;
+                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+                var anuncios = new List<AnunciosModel>();
+
+                var meusanuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+
+                if (meusanuncios?.Any() == true)
+                {
+                    foreach (var anuncio in meusanuncios)
+                    {
+                        anuncios.Add(new AnunciosModel()
+                        {
+                            Id_anuncio = anuncio.Id_anuncio,
+                            Título = anuncio.Título,
+                            Descricao = anuncio.Descricao,
+                            Categoria = anuncio.Categoria,
+                            Preco_dia = anuncio.Preco_dia,
+                            UrlImagem = anuncio.UrlImagem
+                        });
+                    }
+                }
+
+                return View(anuncios);
+            } 
         }
 
 

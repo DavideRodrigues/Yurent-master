@@ -18,6 +18,10 @@ namespace YURent.Models
         public IFormFile ImagemPerfil { get; set; }     
         public string UrlImagemPerfil { get; set; }
         public string Email { get; set; }
+        public string Localizacao { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MMM-yyyy}")]
+        public DateTime Data_criacao { get; set; }
 
         public List<AnunciosModel> AnunciosModel { get; set; }
     }

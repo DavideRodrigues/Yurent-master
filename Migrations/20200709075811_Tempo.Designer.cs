@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YURent.Data;
 
 namespace YURent.Migrations
 {
     [DbContext(typeof(YURentContext))]
-    partial class YURentContextModelSnapshot : ModelSnapshot
+    [Migration("20200709075811_Tempo")]
+    partial class Tempo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,6 +290,9 @@ namespace YURent.Migrations
 
                     b.Property<DateTime>("Data_inicio")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Id_utilizador")
+                        .HasColumnType("int");
 
                     b.Property<float>("Preco")
                         .HasColumnType("real");

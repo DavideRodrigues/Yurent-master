@@ -32,14 +32,37 @@ namespace YURent.Controllers
         public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
         {
             var utilizador = await _context.Utilizador.FindAsync(id);
+            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+            var anunciosModel = new List<AnunciosModel>();
 
-            var perfil = new UtilizadorModel()
+            if(utilizador != null)
             {
-                Nome = utilizador.Nome,
-                Descricao = utilizador.Descricao,
-                UrlImagemPerfil = utilizador.UrlImagemPerfil,
-                Email = utilizador.Email,
-            };
+                foreach(var anuncio in anuncios)
+                {
+                    anunciosModel.Add(new AnunciosModel()
+                    {
+                        Id_anuncio = anuncio.Id_anuncio,
+                        Título = anuncio.Título,
+                        Descricao = anuncio.Descricao,
+                        Categoria = anuncio.Categoria,
+                        Preco_dia = anuncio.Preco_dia,
+                        UrlImagem = anuncio.UrlImagem,
+                        Ativo = anuncio.Ativo,
+                        Data_publicacao = anuncio.Data_publicacao
+                    });
+                }
+
+                var perfil = new UtilizadorModel()
+                { 
+                    AnunciosModel = anunciosModel,
+                    Nome = utilizador.Nome,
+                    Descricao = utilizador.Descricao,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil,
+                    Email = utilizador.Email,
+                    Data_criacao = utilizador.Data_criacao
+                };
+            }
+
 
             return View(perfil);
         }

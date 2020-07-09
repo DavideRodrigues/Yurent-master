@@ -1,4 +1,4 @@
-﻿@model IEnumerable<YURent.Data.AnunciosModel>
+﻿@model IEnumerable<YURent.Models.AnunciosModel>
 
 @{
     ViewData["Title"] = "Pesquisar";
@@ -51,17 +51,17 @@
 <div class="container mt-5">
     <div class="row">
         @foreach(var anuncio in Model){
-        <div class="col-xl-3 col-md-4 col-sm-12 mt-2">
-            <div class="shadow p-3" style="border-radius:15px;">
-                <a asp-controller="Anuncios" asp-action="Anuncio" asp-route-id="@anuncio.Id_anuncio">
-                    <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
-                </a>
-                <h5 class="text-black">@anuncio.Título</h5>
-                <h3 class="orange">@anuncio.Preco_dia € / Dia</h3>
-                <p>Almada</p>
-                <img class="star-produto" src="~/images/Stars/5-star.png" />(57)
+            <div class="col-xl-3 col-md-4 col-sm-12 mt-2">
+                <div class="shadow p-3" style="border-radius:15px;">
+                    <a asp-controller="Anuncios" asp-action="Anuncio" asp-route-id="@anuncio.Id_anuncio">
+                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                    </a>
+                    <h5 class="text-black">@anuncio.Título</h5>
+                    <h3 class="orange">@anuncio.Preco_dia € / Dia</h3>
+                    <p>Almada</p>
+                    <img class="star-produto" src="~/images/Stars/5-star.png" />(57)
+                </div>
             </div>
-        </div>
         }
     </div>
 </div>

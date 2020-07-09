@@ -1,4 +1,4 @@
-﻿@model YURent.Data.AnunciosModel
+﻿@model YURent.Models.AnunciosModel
 
 @{
     ViewData["Title"] = "Anuncio";
@@ -55,21 +55,22 @@
             </p>
             <hr />
             @* FALA COM O SERAFIM *@
-            <h3>Fala com o Serafim</h3>
+            <h3>Fala com @Model.Utilizador.Nome</h3>
             <div class="d-flex mt-2">
-                <a asp-controller="home" asp-action="perfil">
-                    <img class="avatar-anuncio" src="~/images/avatar.png" />
+                <a asp-controller="home" asp-action="perfil" asp-route-id="@Model.Utilizador.Id_utilizador">
+                    <img class="avatar-anuncio" src="@Model.Utilizador.UrlImagemPerfil" />
                 </a>
                 <div class="p-2">
                     <p class="font-weight-bold mb-0">@Model.Utilizador.Nome<i class="ml-1 fas fa-check-circle margin"></i></p>
                     <img class="star-anuncio" src="~/images/stars/5-star.png" /> (28)
-                    <p>Tenho coisas extras e sei que vão perder o valor vender por isso pensei porque não alugá-las?</p>
+                    <p>@Model.Utilizador.Descricao</p>
                 </div>
             </div>
             <a class="btn btn-orange-outline" href="#">Contactar o @Model.Utilizador.Nome</a> @* Entrar no chat com o alugador *@
 
             <hr />
 
+            @* AVALIAÇÕES *@
             <h3>73 Avaliações</h3>
             <div class="d-flex mt-2">
                 <img class="avatar-anuncio" src="~/images/anuncio/RobertoFlores.png" />
@@ -89,29 +90,18 @@
     @* Outros Produtos *@
     <h3>Outros produtos de Serafim</h3>
     <div class="row mt-2">
-        <div class="col-12 col-md-7">
+        <div class="col-12 col-md-12">
             <div class="flex">
-                <div class="outrosprodutos mx-md-2">
-                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
-                    <h5>Camâra CuatroKappa</h5>
-                    <h4 class="orange">10€ / Dia</h4>
-                    <p>Almada</p>
-                    <img class="star-produto" src="~/images/Stars/4-star.png" />
-                </div>
-                <div class="outrosprodutos mx-md-2">
-                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
-                    <h5>Camâra CuatroKappa</h5>
-                    <h4 class="orange">10€ / Dia</h4>
-                    <p>Almada</p>
-                    <img class="star-produto" src="~/images/Stars/4-star.png" />
-                </div>
-                <div class="outrosprodutos mx-md-2">
-                    <img src="~/images/Imagem_Anuncio.png" id="imagem-anuncio" />
-                    <h5>Camâra CuatroKappa</h5>
-                    <h4 class="orange">10€ / Dia</h4>
-                    <p>Almada</p>
-                    <img class="star-produto" src="~/images/Stars/4-star.png" />
-                </div>
+                @foreach (var anuncio in @Model.Utilizador.Anuncios)
+                {
+                    <div class="outrosprodutos mx-md-2">
+                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                        <h5>@anuncio.Título</h5>
+                        <h4 class="orange">@anuncio.Preco_dia€ / Dia</h4>
+                        <p>Almada</p>
+                        <img class="star-produto" src="~/images/Stars/5-star.png" />
+                    </div>
+                }
             </div>
         </div>
     </div>

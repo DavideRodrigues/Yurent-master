@@ -1,121 +1,90 @@
-﻿
+﻿@model IEnumerable<YURent.Models.AnunciosModel>
 @{
     ViewData["Title"] = "Painel";
 }
 
 <div class="container-fluid container-md mt-5">
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-3 col-xl-2">
-            <div class="text-center shadow">
-                @* Info Utilizador *@
-                <img id="avatar-painel" src="~/images/avatar.png" />
-                <p class=" text-center mt-2">Username</p>
-                <hr />
-                <p>Email: usermail@gmail.com</p>
-                <p>Cidade: Almada</p>
-                <p class="">Telefone: 123456789</p>
-                <img id="star-painel" src="~/images/Stars/5-star.png" />
-            </div>
-            <div class="shadow correio">
-                @* Mensagens *@
-                <div class="d-flex justify-content-between correio-header">
-                    <h6>Correio</h6>
-                    <h6 class="link">Ver Tudo</h6>
-                </div>
-                <div class="mensagem-naovista d-flex">
-                    <img class="avatar" src="~/images/avatar.png" />
-                    <div class="ml-2">
-                        <p class="m-0">Username</p>
-                        <p class="m-0">Olá, blablabla</p>
-                    </div>
-                    <p>10m</p>
-                </div>
-                <div class="mensagem-vista d-flex">
-                    <img class="avatar" src="~/images/avatar.png" />
-                    <div class="ml-2">
-                        <p class="m-0">Username</p>
-                        <p class="m-0">Olá, blablabla</p>
-                    </div>
-                    <p>10h</p>
-                </div>
-            </div>
-        </div>
+        
         <div class="col-12 col-md-8 col-lg-8 col-xl-9 mt-3 my-0 my-md-5">
             @* Pendente Confirmação *@
-            <div class="shadow">
-                <div class="p-2 pl-4 border-bottom">
-                    <h3 class="font-weight-normal">Pendente Confirmação (1)</h3>
+            @foreach (var anuncio in Model)
+            {
+                <div class="shadow">
+                    <div class="p-2 pl-4 border-bottom">
+                        <h3 class="font-weight-normal">Pendente Confirmação (1)</h3>
+                    </div>
+                    <div class="shadow d-flex mb-5 justify-content-between align-items-center">
+                        <img class="imagem-estado d-none d-md-flex" src="@anuncio.UrlImagem" />
+                        <div class="ml-2 ml-md-0">
+                            <p class="m-0">@anuncio.Título</p>
+                            <p class="m-0">@anuncio.Preco_dia€</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Desde</p>
+                            <p class="m-0">01/@anuncio.Data_publicacao/20</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Até</p>
+                            <p class="m-0">12/12/20</p>
+                        </div>
+                        <div class="d-flex mr-2">
+                            <a href="#"><img class="imagem-aceitar" src="~/images/AceitaRecusa/aceitar.png" /></a>
+                            <a href="#"><img class="imagem-aceitar" src="~/images/AceitaRecusa/recusar.png" /></a>
+                        </div>
+                    </div>
                 </div>
-                <div class="shadow d-flex mb-5 justify-content-between align-items-center">
-                    <img class="imagem-estado d-none d-md-flex" src="~/images/categorias/cameras.jpg" />
-                    <div class="ml-2 ml-md-0">
-                        <p class="m-0">TESTE</p>
-                        <p class="m-0">20€</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Desde</p>
-                        <p class="m-0">01/01/20</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Até</p>
-                        <p class="m-0">12/12/20</p>
-                    </div>
-                    <div class="d-flex mr-2">
-                        <a href="#"><img class="imagem-aceitar" src="~/images/AceitaRecusa/aceitar.png" /></a>
-                        <a href="#"><img class="imagem-aceitar" src="~/images/AceitaRecusa/recusar.png" /></a>
-                    </div>
-                </div>
-            </div>
 
-            @* A decorrer *@
-            <div class="shadow">
-                <div class="p-2 pl-4 border-bottom">
-                    <h3 class="font-weight-normal">Em progresso (1)</h3>
+                @* A decorrer *@
+                <div class="shadow">
+                    <div class="p-2 pl-4 border-bottom">
+                        <h3 class="font-weight-normal">Em progresso (1)</h3>
+                    </div>
+                    <div class="shadow d-flex mb-5 justify-content-between align-items-center">
+                        <img class="imagem-estado d-none d-md-flex" src="@anuncio.UrlImagem" />
+                        <div class="ml-2 ml-md-0">
+                            <p class="m-0">@anuncio.Título</p>
+                            <p class="m-0">@anuncio.Preco_dia€</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Desde</p>
+                            <p class="m-0">@anuncio.Data_publicacao</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Até</p>
+                            <p class="m-0">12/12/20</p>
+                        </div>
+                        <div class="mr-2">
+                            <a class="btn btn-orange text-white" href="">Enviado</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="shadow d-flex mb-5 justify-content-between align-items-center">
-                    <img class="imagem-estado d-none d-md-flex" src="~/images/categorias/cameras.jpg" />
-                    <div class="ml-2 ml-md-0">
-                        <p class="m-0">TESTE</p>
-                        <p class="m-0">20€</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Desde</p>
-                        <p class="m-0">01/01/20</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Até</p>
-                        <p class="m-0">12/12/20</p>
-                    </div>
-                    <div class="mr-2">
-                        <a class="btn btn-orange text-white" href="">Enviado</a>
-                    </div>
-                </div>
-            </div>
 
-            @* Histórico *@
-            <div class="shadow">
-                <div class="p-2 pl-4 border-bottom">
-                    <h3 class="font-weight-normal">Histórico (1)</h3>
+                @* Histórico *@
+                <div class="shadow">
+                    <div class="p-2 pl-4 border-bottom">
+                        <h3 class="font-weight-normal">Histórico (1)</h3>
+                    </div>
+                    <div class="shadow d-flex mb-5 justify-content-between align-items-center">
+                        <img class="imagem-estado d-none d-md-flex" src="@anuncio.UrlImagem" />
+                        <div class="ml-2 ml-md-0">
+                            <p class="m-0">@anuncio.Título</p>
+                            <p class="m-0">@anuncio.Preco_dia€</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Desde</p>
+                            <p class="m-0">@anuncio.Data_publicacao</p>
+                        </div>
+                        <div>
+                            <p class="m-0">Até</p>
+                            <p class="m-0">12/12/20</p>
+                        </div>
+                        <div class="mr-2">
+                            <a class="btn btn-secondary" href="">Finalizado</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="shadow d-flex mb-5 justify-content-between align-items-center">
-                    <img class="imagem-estado d-none d-md-flex" src="~/images/categorias/cameras.jpg" />
-                    <div class="ml-2 ml-md-0">
-                        <p class="m-0">TESTE</p>
-                        <p class="m-0">20€</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Desde</p>
-                        <p class="m-0">01/01/20</p>
-                    </div>
-                    <div>
-                        <p class="m-0">Até</p>
-                        <p class="m-0">12/12/20</p>
-                    </div>
-                    <div class="mr-2">
-                        <a class="btn btn-secondary" href="">Finalizado</a>
-                    </div>
-                </div>
+            }
             </div>
-        </div>
     </div>
 </div>

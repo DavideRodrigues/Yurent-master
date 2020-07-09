@@ -37,6 +37,7 @@ namespace YURent.Models
         public string UrlImagem { get; set; }
 
         public bool Ativo { get; set; }
+
         public DateTime Data_publicacao { get; set; }
 
     }

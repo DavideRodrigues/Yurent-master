@@ -44,6 +44,7 @@ namespace YURent.Controllers
                     Nome = utilizador.Nome,
                     Email = utilizador.Email,
                     Id_utilizador = utilizador.Id_utilizador,
+                    Data_criacao = DateTime.UtcNow,
                     UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
                 return View(newUtilizador);
@@ -66,6 +67,7 @@ namespace YURent.Controllers
                 var newUtilizador = new Utilizador()
                 {
                     Nome = utilizador.Nome,
+                    Data_criacao = DateTime.UtcNow,
                     Email = claimsidentity.Name
                 };
 

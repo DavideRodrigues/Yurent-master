@@ -19,7 +19,6 @@ namespace YURent.Areas.Identity.Data
         public float Preco { get; set; }
         public bool Cancelado { get; set; }
 
-        public int Id_utilizador { get; set; }
 
     }
 }
