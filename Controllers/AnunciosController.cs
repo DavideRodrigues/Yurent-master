@@ -50,12 +50,21 @@ namespace YURent.Controllers
             return View();
         }
 
+        #region Adicionar anúncio
         public IActionResult AdicionarAnuncio()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+            
         }
 
-        #region Adicionar anúncio
+        
         //Adiciona um anúncio novo à base de dados
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,6 +106,21 @@ namespace YURent.Controllers
         #endregion
 
         #region Detalhes Anuncio
+
+        public IActionResult Anuncio()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+        }
+
+
         [Route("anuncio/{id}", Name = "anuncioDetailsRoute")]
         public async Task<ViewResult> Anuncio(int id)
         {
@@ -155,9 +179,11 @@ namespace YURent.Controllers
             return View();
         }
 
-#endregion
+        #endregion
 
-            public async Task<ViewResult> MeusAnuncios()
+        #region Meus Anúncios
+        [ValidateAntiForgeryToken]
+        public async Task<ViewResult> MeusAnuncios()
             {
                 var claimsidentity = User.Identity as ClaimsIdentity;
                 var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
@@ -184,12 +210,21 @@ namespace YURent.Controllers
                 }
 
                 return View(anuncios);
-            } 
-        
-
+            }
+        #endregion
 
         #region Editar Anúncio
-
+        public IActionResult EditarAnuncio()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+        }
 
         [Route("EditarAnuncio/{id}", Name = "editarRoute")]
         public IActionResult EditarAnuncio(int id)
@@ -284,33 +319,42 @@ namespace YURent.Controllers
             return RedirectToAction("MeusAnuncios");
         }
 
+        #region Guardados
 
         [Route("guardados/{id}", Name = "guardarRoute")]
-        public async Task<ViewResult> Guardados(int id)
+        public async Task<IActionResult> Guardados(int id)
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
 
-            var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
-            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-            var guardar = new Guardados()
+            if (User.Identity.IsAuthenticated)
             {
-                Utilizador = utilizador,
-                Anuncios = anuncio
-            };
+                var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
+                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-            if (_context.Guardados.Where(a => a.Utilizador == utilizador && a.Anuncios == anuncio).Any())
-            {
-                _context.Guardados.Remove(guardar);
+                var guardar = new Guardados()
+                {
+                    Utilizador = utilizador,
+                    Anuncios = anuncio
+                };
+
+                if (_context.Guardados.Where(a => a.Utilizador == utilizador && a.Anuncios == anuncio).Any())
+                {
+                    _context.Guardados.Remove(guardar);
+                }
+                else
+                {
+                    await _context.Guardados.AddAsync(guardar);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction("Perfil", "Guardados");
             }
             else
             {
-                await _context.Guardados.AddAsync(guardar);
-                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
-            return View("Guardados");
-        }
 
+        }
+        #endregion
 
 
     }

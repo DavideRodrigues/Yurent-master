@@ -67,6 +67,20 @@ namespace YURent.Controllers
             return View();
         }
 
+        #region Editar Foto
+        public IActionResult EditarFoto()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home", new { area = "" });
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarFoto(UtilizadorModel model)
@@ -104,32 +118,42 @@ namespace YURent.Controllers
             }
             return RedirectToAction("GerirConta");
         }
+        #endregion
 
         #region GerirConta
         // Vai buscar os dados da conta e envia-los para o form (se existirem)
+
         public IActionResult GerirConta()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
 
-            if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
+            if (User.Identity.IsAuthenticated)
             {
-                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-                var newUtilizador = new UtilizadorModel()
+                if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
                 {
-                    Nome = utilizador.Nome,
-                    Email = utilizador.Email,
-                    Id_utilizador = utilizador.Id_utilizador,
-                    Descricao = utilizador.Descricao,
-                    UrlImagemPerfil = utilizador.UrlImagemPerfil
-                };
-                return View(newUtilizador);
+                    var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+                    var newUtilizador = new UtilizadorModel()
+                    {
+                        Nome = utilizador.Nome,
+                        Email = utilizador.Email,
+                        Id_utilizador = utilizador.Id_utilizador,
+                        Descricao = utilizador.Descricao,
+                        UrlImagemPerfil = utilizador.UrlImagemPerfil
+                    };
+                    return View(newUtilizador);
+                }
+                else
+                {
+                    var model = new UtilizadorModel();
+                    return View(model);
+                }
             }
             else
             {
-                var model = new UtilizadorModel();
-                return View(model);
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
+
         }
 
         [HttpPost]
@@ -177,41 +201,48 @@ namespace YURent.Controllers
         public IActionResult GerirFaturacao()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
-
-            // Enviar o objeto faturação
-            if (_context.Faturacao.Where(a => a.Email == claimsidentity.Name).Any())
+            if (User.Identity.IsAuthenticated)
             {
-                var faturação = _context.Faturacao.Include(p => p.Utilizador).FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-                UtilizadorModel utilizador = new UtilizadorModel()
+                if (_context.Faturacao.Where(a => a.Email == claimsidentity.Name).Any())
                 {
-                    Id_utilizador = faturação.Utilizador.Id_utilizador,
-                    Nome = faturação.Utilizador.Nome,
-                    Descricao = faturação.Utilizador.Descricao,
-                    UrlImagemPerfil = faturação.Utilizador.UrlImagemPerfil,
-                    Email = faturação.Utilizador.Email
-                };
+                    var faturação = _context.Faturacao.Include(p => p.Utilizador).FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-                var novaFaturacao = new FaturacaoModel()
+                    UtilizadorModel utilizador = new UtilizadorModel()
+                    {
+                        Id_utilizador = faturação.Utilizador.Id_utilizador,
+                        Nome = faturação.Utilizador.Nome,
+                        Descricao = faturação.Utilizador.Descricao,
+                        UrlImagemPerfil = faturação.Utilizador.UrlImagemPerfil,
+                        Email = faturação.Utilizador.Email
+                    };
+
+                    var novaFaturacao = new FaturacaoModel()
+                    {
+                        Utilizador = utilizador,
+                        Nome_completo = faturação.Nome_completo,
+                        Morada = faturação.Morada,
+                        Codigo_Postal = faturação.Codigo_Postal,
+                        Nif = faturação.Nif,
+                        Iban = faturação.Iban,
+                        Email = faturação.Email,
+                        Id_faturacao = faturação.Id_faturacao
+                    };
+
+                    return View(novaFaturacao);
+                }
+                else
                 {
-                    Utilizador = utilizador,
-                    Nome_completo = faturação.Nome_completo,
-                    Morada = faturação.Morada,
-                    Codigo_Postal = faturação.Codigo_Postal,
-                    Nif = faturação.Nif,
-                    Iban = faturação.Iban,
-                    Email = faturação.Email,
-                    Id_faturacao = faturação.Id_faturacao
-                };
+                    var model = new FaturacaoModel();
 
-                return View(novaFaturacao);
+                    return View(model);
+                }
             }
             else
             {
-                var model = new FaturacaoModel();
-
-                return View(model);
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
+            // Enviar o objeto faturação
+            
         }
 
         //Adicionar ou editar faturação
@@ -314,16 +345,17 @@ namespace YURent.Controllers
         #endregion
 
 
-        // FAZER FAJOFJSOFJAOFJO
+        // ERRO
         public async Task<ViewResult> Guardados()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
             var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-            if(_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
-            {
-                var GuardadosModel = new List<GuardadosModel>();
-                var Guardados = await _context.Guardados.Where(a => a.Utilizador == utilizador).ToListAsync();
 
+            var GuardadosModel = new List<GuardadosModel>();
+            var Guardados = await _context.Guardados.Include(p => p.Anuncios).Where(a => a.Utilizador.Id_utilizador == utilizador.Id_utilizador).ToListAsync();
+
+          if (_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
+            {
                 foreach (var Guardado in Guardados)
                 {
                     var anuncio = new AnunciosModel()

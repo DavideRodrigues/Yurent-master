@@ -7,8 +7,10 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @foreach (var anuncio in Model)
+            @if(Model != null)
             {
+                @foreach (var anuncio in Model)
+                {
                 <div class="col-12 shadow p-2 mt-3 d-flex justify-content-between">
                     <div class="d-flex">
                         <img src="@anuncio.Anuncios.UrlImagem" id="imagem-anuncio" />
@@ -22,6 +24,11 @@
                         </div>
                     </div>
                 </div>
+                }
+            }
+            else
+            {
+                <h1 class="display-1 my-5 py-5">Não tem nenhum anûncio guardado</h1>
             }
         </div>
     </div>

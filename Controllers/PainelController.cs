@@ -24,8 +24,6 @@ namespace YURent.Controllers
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
 
-
-
             return View();
         }     
 

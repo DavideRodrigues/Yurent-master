@@ -31,29 +31,39 @@ namespace YURent.Controllers
             return View();
         }
 
+        #region Criar Utilizador
+
         public IActionResult CriarUtilizador()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
 
-            if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
+            if (User.Identity.IsAuthenticated)
             {
-                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-                var newUtilizador = new UtilizadorModel()
+                if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
                 {
-                    Nome = utilizador.Nome,
-                    Email = utilizador.Email,
-                    Id_utilizador = utilizador.Id_utilizador,
-                    Data_criacao = DateTime.UtcNow,
-                    UrlImagemPerfil = utilizador.UrlImagemPerfil
-                };
-                return View(newUtilizador);
+                    var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+                    var newUtilizador = new UtilizadorModel()
+                    {
+                        Nome = utilizador.Nome,
+                        Email = utilizador.Email,
+                        Id_utilizador = utilizador.Id_utilizador,
+                        Data_criacao = DateTime.UtcNow,
+                        UrlImagemPerfil = utilizador.UrlImagemPerfil
+                    };
+                    return View(newUtilizador);
+                }
+                else
+                {
+                    var model = new UtilizadorModel();
+                    return View(model);
+                }
             }
             else
             {
-                var model = new UtilizadorModel();
-                return View(model);
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
+            
         }
 
         [HttpPost]
@@ -84,12 +94,9 @@ namespace YURent.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
-
-
-
-
-
+        #region Resultado Pesquisa
 
         public async Task<ViewResult> ResultadoPesquisa(string procuraString)
         {
@@ -137,15 +144,51 @@ namespace YURent.Controllers
 
             return View(anuncios);
         }
+        #endregion
 
+        [Route("resultadopesquisa/{categoria}", Name = "categoriaRoute")]
         public async Task<ViewResult> PesquisarCategoria(string categoria)
         {
             var anuncios = new List<AnunciosModel>();
-            var anuncios2 = await _context.Anuncios.Where(a => a.Categoria == categoria).ToListAsync();
+            var ListaAnuncios = await _context.Anuncios.Where(a => a.Categoria == categoria).ToListAsync();
+            var AllAnuncios = await _context.Anuncios.ToListAsync();
 
-            if (anuncios2?.Any() == true)
+            if (ListaAnuncios?.Any() == true)
             {
-                foreach (var anuncio in anuncios2)
+                foreach (var anuncio in ListaAnuncios)
+                {
+                    anuncios.Add(new AnunciosModel()
+                    {
+                        Id_anuncio = anuncio.Id_anuncio,
+                        Título = anuncio.Título,
+                        Descricao = anuncio.Descricao,
+                        Categoria = anuncio.Categoria,
+                        Preco_dia = anuncio.Preco_dia,
+                        UrlImagem = anuncio.UrlImagem
+                    });
+                }
+            }
+            else if (AllAnuncios?.Any() == true)
+            {
+                if (categoria == null)
+                {
+                    if (AllAnuncios?.Any() == true)
+                    {
+                        foreach (var anuncio in AllAnuncios)
+                        {
+                            anuncios.Add(new AnunciosModel()
+                            {
+                                Id_anuncio = anuncio.Id_anuncio,
+                                Título = anuncio.Título,
+                                Descricao = anuncio.Descricao,
+                                Categoria = anuncio.Categoria,
+                                Preco_dia = anuncio.Preco_dia,
+                                UrlImagem = anuncio.UrlImagem
+                            });
+                        }
+                    }
+                }
+                foreach (var anuncio in ListaAnuncios)
                 {
                     anuncios.Add(new AnunciosModel()
                     {
@@ -159,15 +202,13 @@ namespace YURent.Controllers
                 }
             }
 
-            return View();
+            return View("ResultadoPesquisa", anuncios);
         }
 
         public IActionResult Perfil()
         {
             return View();
         }
-      
-
 
     }
 }
