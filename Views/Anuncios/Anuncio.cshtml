@@ -1,4 +1,4 @@
-﻿@model YURent.Models.AnunciosModel
+﻿@model YURent.ViewModels.ReservasAnuncios
 
 @{
     ViewData["Title"] = "Anuncio";
@@ -18,27 +18,18 @@
             <div class="card" style="position:fixed; width: 19rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Detalhes de Aluguer</h5>
-                    <div class="d-flex justify-content-between">
-                        <p>Data:</p>
-                        <p>01/02/2020 - 03/02/2020</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>@Model.Preco_dia€ x 1 Dia:</p>
-                        @{float preco = (@Model.Preco_dia * 2);}
-                        <p>@preco €</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Taxa de Serviço:</p>
-                        @{double servico = (@Model.Preco_dia * 0.15);}
-                        <p>@servico€</p>
-                    </div>
-                    <hr />
-                    <div class="d-flex justify-content-between">
-                        <p>Total:</p>
-                        @{double total = (preco + servico);}
-                        <p>@total€</p>
-                    </div>
-                    <a asp-action="Reservar" asp-route-id="@Model.Id_anuncio" asp-route-inicio="01/01/2000" asp-route-fim="01/01/2000" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
+                    <form asp-action="Reservar" method="post" class="form-group">
+                        <input class="form-control" type="hidden" asp-for="Id_anuncio" />
+                        <input type="hidden" asp-for="Utilizador.Id_utilizador" />
+                        <label>Data</label>
+                        <input class="form-control" type="date" asp-for="Data_inicio" />
+                        <input class="form-control" type="date" asp-for="Data_fim" />
+                        <label>Preço por dia</label>
+                        <input class="form-control" asp-for="Preco_dia" readonly />
+                        <label>Total</label>
+                        <input class="form-control" asp-for="Total" readonly/>
+                        <input type="submit" value="Reservar" class="btn btn-orange-outline" />
+                    </form>
                 </div>
             </div>
         </div>

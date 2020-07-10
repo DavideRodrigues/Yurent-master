@@ -53,6 +53,7 @@ footer a {
 .avatar {
     border-radius: 150px;
     width: 50px;
+    height: 50px;
 }
 
 /* #region Classes Uteis*/

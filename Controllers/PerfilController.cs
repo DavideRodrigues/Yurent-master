@@ -141,6 +141,7 @@ namespace YURent.Controllers
                         Descricao = utilizador.Descricao,
                         UrlImagemPerfil = utilizador.UrlImagemPerfil
                     };
+                    YURent.Areas.Identity.Pages.Account.LoginModel.imagemSource = newUtilizador.UrlImagemPerfil;
                     return View(newUtilizador);
                 }
                 else

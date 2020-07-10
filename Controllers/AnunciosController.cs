@@ -27,27 +27,37 @@ namespace YURent.Controllers
             this._hostEnvironment = hostEnvironment;
         }
 
-        [Route("reservar/{id}/{inicio}/{fim}", Name = "reservarRoute")]
-        public async Task<ViewResult> Reservar(int id_anuncio, DateTime inicio, DateTime fim)
+        [HttpPost]
+        public async Task<IActionResult> Reservar([Bind("Id_anuncio, Id_reserva, Utilizador.Id_utilizador, Data_inicio, Data_fim, Preco_dia")] ReservasAnuncios reservasAnuncios)
         {
-            var claimsidentity = User.Identity as ClaimsIdentity;
-            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
-            var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id_anuncio);
-
-            Reservas novaReserva = new Reservas
+            if (User.Identity.IsAuthenticated)
             {
-                Anuncio = anuncio,
-                Utilizador = utilizador,
-                Data_inicio = inicio,
-                Data_fim = fim,
-                Preco = anuncio.Preco_dia,
-                Cancelado = false
-            };
+                var claimsidentity = User.Identity as ClaimsIdentity;
+                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
+                var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == reservasAnuncios.Id_anuncio);
 
-            await _context.Reservas.AddAsync(novaReserva);
-            await _context.SaveChangesAsync();
+                Reservas novaReserva = new Reservas
+                {
+                    Anuncio = anuncio,
+                    Utilizador = utilizador,
+                    Data_inicio = reservasAnuncios.Data_inicio,
+                    Data_fim = reservasAnuncios.Data_fim,
+                    Preco = reservasAnuncios.Preco_dia
+                };
 
-            return View();
+                await _context.Reservas.AddAsync(novaReserva);
+                await _context.SaveChangesAsync();
+
+                return View("Anuncios");
+            }
+            else
+            {
+                string url = "../Identity/Account/Login";
+                return Redirect(url);
+            }
+                
+
+
         }
 
         #region Adicionar anúncio
@@ -125,6 +135,7 @@ namespace YURent.Controllers
             var anuncios = await _context.Anuncios.Where(a => a.Utilizador == anuncioAtual.Utilizador).ToListAsync();
             var anunciosModel = new List<AnunciosModel>();
 
+
             if (anuncioAtual != null)
             {
                 foreach (var anuncio in anuncios)
@@ -133,7 +144,6 @@ namespace YURent.Controllers
                     {
                         anunciosModel.Add(new AnunciosModel()
                         {
-                            
                             Título = anuncio.Título,
                             Descricao = anuncio.Descricao,
                             Categoria = anuncio.Categoria,
@@ -159,7 +169,7 @@ namespace YURent.Controllers
                     
                 };
 
-                var DetalhesAnuncio = new AnunciosModel()
+                var DetalhesAnuncio = new ReservasAnuncios()
                 {
                     Utilizador = utilizador,
                     Id_anuncio = anuncioAtual.Id_anuncio,
@@ -168,7 +178,10 @@ namespace YURent.Controllers
                     Categoria = anuncioAtual.Categoria,
                     Preco_dia = anuncioAtual.Preco_dia,
                     Localizacao = anuncioAtual.Localizacao,
-                    UrlImagem = anuncioAtual.UrlImagem
+                    UrlImagem = anuncioAtual.UrlImagem,
+                    Data_inicio = DateTime.Now,
+                    Data_fim = DateTime.Now,
+                    Total = anuncioAtual.Preco_dia * 0.15
                 };
 
                 return View(DetalhesAnuncio);

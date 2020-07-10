@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using YURent.Areas.Identity.Data;
+using YURent.Data;
 
 namespace YURent.Areas.Identity.Pages.Account
 {
@@ -21,14 +22,19 @@ namespace YURent.Areas.Identity.Pages.Account
         private readonly UserManager<YURentUser> _userManager;
         private readonly SignInManager<YURentUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        public static string imagemSource;
+        private readonly YURentContext _context;
+
 
         public LoginModel(SignInManager<YURentUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<YURentUser> userManager)
+            UserManager<YURentUser> userManager,
+            YURentContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -84,6 +90,7 @@ namespace YURent.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    imagemSource = _context.Utilizador.FirstOrDefault(a => a.Email == Input.Email).UrlImagemPerfil;
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
