@@ -13,7 +13,7 @@ namespace YURent.Models
     {
         [Key]
         public int Id_reserva { get; set; }
-        public AnunciosModel AnuncioModel { get; set; }
+        public AnunciosModel Anuncio { get; set; }
         
         [Display(Name = "Data de Inicio")]
         public DateTime Data_inicio { get; set; }
@@ -22,7 +22,7 @@ namespace YURent.Models
         public float Preco { get; set; }
         public bool Cancelado { get; set; }
 
-        public UtilizadorModel UtilizadorModel { get; set; }
+        public UtilizadorModel Utilizador { get; set; }
 
     }
 }

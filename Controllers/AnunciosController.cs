@@ -110,13 +110,9 @@ namespace YURent.Controllers
         public IActionResult Anuncio()
         {
             if (User.Identity.IsAuthenticated)
-            {
                 return View();
-            }
             else
-            {
                 return RedirectToAction("Index", "Home", new { area = "" });
-            }
 
         }
 
@@ -137,7 +133,7 @@ namespace YURent.Controllers
                     {
                         anunciosModel.Add(new AnunciosModel()
                         {
-                            Id_anuncio = anuncio.Id_anuncio,
+                            
                             Título = anuncio.Título,
                             Descricao = anuncio.Descricao,
                             Categoria = anuncio.Categoria,
@@ -145,7 +141,8 @@ namespace YURent.Controllers
                             UrlImagem = anuncio.UrlImagem,
                             Localizacao = anuncio.Localizacao,
                             Ativo = anuncio.Ativo,
-                            Data_publicacao = anuncio.Data_publicacao
+                            Data_publicacao = anuncio.Data_publicacao,
+                            Id_anuncio = anuncio.Id_anuncio
                         });
                     }
 

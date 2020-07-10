@@ -78,7 +78,8 @@ namespace YURent.Controllers
                 {
                     Nome = utilizador.Nome,
                     Data_criacao = DateTime.UtcNow,
-                    Email = claimsidentity.Name
+                    Email = claimsidentity.Name,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
 
                 _context.Utilizador.Add(newUtilizador);
@@ -171,6 +172,35 @@ namespace YURent.Controllers
 
             return View("ResultadoPesquisa", anuncios);
         }
+
+        // O METODO NÃO ESTÀ A SER CHAMADO
+
+        //public IActionResult _LoggedIn()
+        //{
+        //    var claimsidentity = User.Identity as ClaimsIdentity;
+
+
+        //    if (_context.Utilizador.Where(a => a.Email == claimsidentity.Name).Any())
+        //    {
+        //        var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+        //        var newUtilizador = new UtilizadorModel()
+        //        {
+        //            Nome = utilizador.Nome,
+        //            Email = utilizador.Email,
+        //            Id_utilizador = utilizador.Id_utilizador,
+        //            Descricao = utilizador.Descricao,
+        //            UrlImagemPerfil = utilizador.UrlImagemPerfil
+        //        };
+
+        //        return View(newUtilizador);
+        //    }
+        //    else
+        //    {
+        //        var model = new UtilizadorModel();
+        //        return View(model);
+        //    }
+        //}
 
         public IActionResult Perfil()
         {
