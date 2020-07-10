@@ -182,7 +182,6 @@ namespace YURent.Controllers
         #endregion
 
         #region Meus Anúncios
-        [ValidateAntiForgeryToken]
         public async Task<ViewResult> MeusAnuncios()
             {
                 var claimsidentity = User.Identity as ClaimsIdentity;

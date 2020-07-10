@@ -146,7 +146,7 @@ namespace YURent.Controllers
         }
         #endregion
 
-        [Route("resultadopesquisa/{categoria}", Name = "categoriaRoute")]
+        [Route("Home/PesquisarCategoria/{categoria}", Name = "categoriaRoute")]
         public async Task<ViewResult> PesquisarCategoria(string categoria)
         {
             var anuncios = new List<AnunciosModel>();
@@ -167,40 +167,7 @@ namespace YURent.Controllers
                         UrlImagem = anuncio.UrlImagem
                     });
                 }
-            }
-            else if (AllAnuncios?.Any() == true)
-            {
-                if (categoria == null)
-                {
-                    if (AllAnuncios?.Any() == true)
-                    {
-                        foreach (var anuncio in AllAnuncios)
-                        {
-                            anuncios.Add(new AnunciosModel()
-                            {
-                                Id_anuncio = anuncio.Id_anuncio,
-                                Título = anuncio.Título,
-                                Descricao = anuncio.Descricao,
-                                Categoria = anuncio.Categoria,
-                                Preco_dia = anuncio.Preco_dia,
-                                UrlImagem = anuncio.UrlImagem
-                            });
-                        }
-                    }
-                }
-                foreach (var anuncio in ListaAnuncios)
-                {
-                    anuncios.Add(new AnunciosModel()
-                    {
-                        Id_anuncio = anuncio.Id_anuncio,
-                        Título = anuncio.Título,
-                        Descricao = anuncio.Descricao,
-                        Categoria = anuncio.Categoria,
-                        Preco_dia = anuncio.Preco_dia,
-                        UrlImagem = anuncio.UrlImagem
-                    });
-                }
-            }
+            }           
 
             return View("ResultadoPesquisa", anuncios);
         }

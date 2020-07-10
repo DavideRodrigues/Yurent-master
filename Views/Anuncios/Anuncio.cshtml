@@ -1,4 +1,4 @@
-﻿@model YURent.Models.AnunciosModel
+﻿@model YURent.Models.ReservasModel
 
 @{
     ViewData["Title"] = "Anuncio";
@@ -6,11 +6,11 @@
 
 <div class="container mt-5">
     <div class="row mb-2">
-        <h2 class="col-12 col-md-7">@Model.Título</h2>
+        <h2 class="col-12 col-md-7">@Model.AnuncioModel.Título</h2>
     </div>
     <div class="row">
         <div class="col-12 col-md-7 m-0">
-            <img class="d-block w-100 imagem-teste" src="@Model.UrlImagem" />
+            <img class="d-block w-100 imagem-teste" src="@Model.AnuncioModel.UrlImagem" />
         </div>
 
         <div class="col-md-5 d-none d-md-block position-sticky">
@@ -23,13 +23,13 @@
                         <p>01/02/2020 - 03/02/2020</p>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <p>@Model.Preco_dia€ x 1 Dia:</p>
-                        @{float preco = (@Model.Preco_dia * 2);}
+                        <p>@Model.AnuncioModel.Preco_dia€ x 1 Dia:</p>
+                        @{float preco = (@Model.AnuncioModel.Preco_dia * 2);}
                         <p>@preco €</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p>Taxa de Serviço:</p>
-                        @{double servico = (@Model.Preco_dia * 0.15);}
+                        @{double servico = (@Model.AnuncioModel.Preco_dia * 0.15);}
                         <p>@servico€</p>
                     </div>
                     <hr />
@@ -38,36 +38,36 @@
                         @{double total = (preco + servico);}
                         <p>@total€</p>
                     </div>
-                    <a asp-action="Reservar" asp-route-id="@Model.Id_anuncio" asp-route-inicio="01/01/2000" asp-route-fim="01/01/2000" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
+                    <a asp-action="Reservar" asp-route-id="@Model.AnuncioModel.Id_anuncio" asp-route-inicio="01/01/2000" asp-route-fim="01/01/2000" class="card-link btn btn-orange-outline mt-2">Pedir para Alugar</a>
                 </div>
             </div>
         </div>
 
         <div class="col-12 col-md-7 d-block mt-2">
 
-            <a asp-controller="Anuncios" asp-action="Guardados" asp-route-id="@Model.Id_anuncio" class="card-link btn btn-orange-outline">Guardar</a>
+            <a asp-controller="Anuncios" asp-action="Guardados" asp-route-id="@Model.AnuncioModel.Id_anuncio" class="card-link btn btn-orange-outline">Guardar</a>
 
             <h3>Descrição</h3>
             <p class="text-grey">
-                @Model.Descricao
+                @Model.AnuncioModel.Descricao
             </p>
             <hr />
             @* LOCALIZAÇÃO *@
             <h3>Localização</h3>
             <p class="text-grey">
-                @Model.Localizacao
+                @Model.AnuncioModel.Descricao
             </p>
             <hr />
             @* FALA COM O SERAFIM *@
-            <h3>Fala com @Model.Utilizador.Nome</h3>
+            <h3>Fala com @Model.AnuncioModel.Utilizador.Nome</h3>
             <div class="d-flex mt-2">
-                <a asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.Utilizador.Id_utilizador">
-                    <img class="avatar-anuncio" src="@Model.Utilizador.UrlImagemPerfil" />
+                <a asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.AnuncioModel.Utilizador.Id_utilizador">
+                    <img class="avatar-anuncio" src="@Model.AnuncioModel.Utilizador.UrlImagemPerfil" />
                 </a>
                 <div class="p-2">
-                    <p class="font-weight-bold mb-0">@Model.Utilizador.Nome<i class="ml-1 fas fa-check-circle margin"></i></p>
+                    <p class="font-weight-bold mb-0">@Model.AnuncioModel.Utilizador.Nome<i class="ml-1 fas fa-check-circle margin"></i></p>
                     <img class="star-anuncio" src="~/images/stars/5-star.png" /> (28)
-                    <p>@Model.Utilizador.Descricao</p>
+                    <p>@Model.AnuncioModel.Utilizador.Descricao</p>
                 </div>
             </div>
             <!--<a class="btn btn-orange-outline" href="#">Contactar o Model.Utilizador.Nome</a>--> @* Entrar no chat com o alugador *@
@@ -92,12 +92,12 @@
 
 <div class="container">
     @* Outros Produtos *@
-    <h3>Outros produtos de @Model.Utilizador.Nome</h3>
+    <h3>Outros produtos de @Model.AnuncioModel.Utilizador.Nome</h3>
     <div class="row mt-2">
         <div class="flex">
-            @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
+            @foreach (var anuncio in @Model.AnuncioModel.Utilizador.AnunciosModel)
             {
-                @if(Model.Id_anuncio != anuncio.Id_anuncio)
+                @if(Model.AnuncioModel.Id_anuncio != anuncio.Id_anuncio)
                 {
                     <div class="col-12 col-md-4">
                         <div class="outrosprodutos mx-md-2">
