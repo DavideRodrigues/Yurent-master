@@ -294,7 +294,8 @@ namespace YURent.Controllers
                 anuncios.Título = anuncio.Título;
                 anuncios.Descricao = anuncio.Descricao;
                 anuncios.Categoria = anuncio.Categoria;
-                anuncio.Localizacao = anuncio.Localizacao;
+                anuncios.Localizacao = anuncio.Localizacao;
+                anuncios.Preco_dia = anuncio.Preco_dia;
 
                 if (anuncio.UrlImagem != null)
                 {
@@ -348,7 +349,7 @@ namespace YURent.Controllers
 
                 if (_context.Guardados.Where(a => a.Utilizador == utilizador && a.Anuncios == anuncio).Any())
                 {
-                    _context.Guardados.Remove(guardar);
+                    //_context.Guardados.Remove(guardar);
                 }
                 else
                 {

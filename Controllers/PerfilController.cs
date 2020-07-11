@@ -188,7 +188,7 @@ namespace YURent.Controllers
                 utiliza.Nome = utilizador.Nome;
                 utiliza.Descricao = utilizador.Descricao;
 
-                //_context.SaveChanges();
+                _context.SaveChanges();
                 return View(ImgUtilizador);
             }
 
