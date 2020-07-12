@@ -34,14 +34,8 @@ namespace YURent
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-
-
             services.AddScoped<PerfilRepository, PerfilRepository>();
-
-
-        }
-
-        
+        }     
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -51,9 +45,6 @@ namespace YURent
             }
 
             app.UseStaticFiles();
-
-            
-
             app.UseRouting();
 
             app.UseAuthentication();

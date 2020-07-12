@@ -31,25 +31,45 @@ namespace YURent.Controllers
         [HttpPost]
         public async Task<IActionResult> Reservar([Bind("Id_anuncio, Id_reserva, Utilizador.Id_utilizador, Data_inicio, Data_fim, Preco_dia")] ReservasAnuncios reservasAnuncios)
         {
+
+            var claimsidentity = User.Identity as ClaimsIdentity;
+
             if (User.Identity.IsAuthenticated)
             {
-                var claimsidentity = User.Identity as ClaimsIdentity;
-                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
-                var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == reservasAnuncios.Id_anuncio);
-
-                Reservas novaReserva = new Reservas
+                if (_context.Reservas.Where(a => a.Utilizador.Email == claimsidentity.Name && a.Anuncio.Id_anuncio == reservasAnuncios.Id_anuncio && a.Data_inicio == reservasAnuncios.Data_inicio && a.Data_fim == reservasAnuncios.Data_fim).Any())
                 {
-                    Anuncio = anuncio,
-                    Utilizador = utilizador,
-                    Data_inicio = reservasAnuncios.Data_inicio,
-                    Data_fim = reservasAnuncios.Data_fim,
-                    Preco = reservasAnuncios.Preco_dia
-                };
+                    var claimsIdentity = User.Identity as ClaimsIdentity;
+                    var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
+                    var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == reservasAnuncios.Id_anuncio);
 
-                await _context.Reservas.AddAsync(novaReserva);
-                await _context.SaveChangesAsync();
+                    ViewBag.mensagem = "";
 
-                return View("Anuncios");
+                    if (reservasAnuncios.Data_fim > reservasAnuncios.Data_inicio)
+                    {
+                        Reservas novaReserva = new Reservas
+                        {
+                            Anuncio = anuncio,
+                            Utilizador = utilizador,
+                            Data_inicio = reservasAnuncios.Data_inicio,
+                            Data_fim = reservasAnuncios.Data_fim,
+                            Preco = reservasAnuncios.Preco_dia
+                        };
+
+                        await _context.Reservas.AddAsync(novaReserva);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Anuncio", new { id = reservasAnuncios.Id_anuncio });
+                    }
+                    else
+                    {
+                        ViewBag.mensagem = "Data inválida.";
+                        return RedirectToAction("Anuncio", new { id = reservasAnuncios.Id_anuncio });
+                    }
+                }
+                else
+                {
+                    ViewBag.mensagem = "Já tens uma reserva para esta data";
+                    return RedirectToAction("Anuncio", new { id = reservasAnuncios.Id_anuncio });
+                }
             }
             else
             {
@@ -102,7 +122,8 @@ namespace YURent.Controllers
                         Preco_dia = model.Preco_dia,
                         Data_publicacao = DateTime.UtcNow,
                         UrlImagem = model.UrlImagem,
-                        Localizacao = model.Localizacao
+                        Localizacao = model.Localizacao,
+                        Ativo = true
                     };
 
                     await _context.Anuncios.AddAsync(novoAnuncio);
@@ -136,11 +157,11 @@ namespace YURent.Controllers
             var anunciosModel = new List<AnunciosModel>();
 
 
-            if (anuncioAtual != null)
+            if (anuncioAtual != null && anuncioAtual.Ativo == true)
             {
                 foreach (var anuncio in anuncios)
                 {
-                    if(anuncio.Id_anuncio != id)
+                    if (anuncio.Id_anuncio != id)
                     {
                         anunciosModel.Add(new AnunciosModel()
                         {
@@ -166,7 +187,8 @@ namespace YURent.Controllers
                     Nome = anuncioAtual.Utilizador.Nome,
                     UrlImagemPerfil = anuncioAtual.Utilizador.UrlImagemPerfil,
                     Email = anuncioAtual.Utilizador.Email
-                    
+
+
                 };
 
                 var DetalhesAnuncio = new ReservasAnuncios()
@@ -179,6 +201,7 @@ namespace YURent.Controllers
                     Preco_dia = anuncioAtual.Preco_dia,
                     Localizacao = anuncioAtual.Localizacao,
                     UrlImagem = anuncioAtual.UrlImagem,
+                    Ativo = anuncioAtual.Ativo,
                     Data_inicio = DateTime.Now,
                     Data_fim = DateTime.Now,
                     Total = anuncioAtual.Preco_dia * 0.15
@@ -193,17 +216,19 @@ namespace YURent.Controllers
 
         #region Meus Anúncios
         public async Task<ViewResult> MeusAnuncios()
+        {
+            var claimsidentity = User.Identity as ClaimsIdentity;
+            var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+
+            var anuncios = new List<AnunciosModel>();
+
+            var meusanuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+
+            if (meusanuncios?.Any() == true)
             {
-                var claimsidentity = User.Identity as ClaimsIdentity;
-                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-                var anuncios = new List<AnunciosModel>();
-
-                var meusanuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
-
-                if (meusanuncios?.Any() == true)
+                foreach (var anuncio in meusanuncios)
                 {
-                    foreach (var anuncio in meusanuncios)
+                    if (anuncio.Ativo)
                     {
                         anuncios.Add(new AnunciosModel()
                         {
@@ -213,13 +238,15 @@ namespace YURent.Controllers
                             Categoria = anuncio.Categoria,
                             Preco_dia = anuncio.Preco_dia,
                             UrlImagem = anuncio.UrlImagem,
-                            Localizacao = anuncio.Localizacao
+                            Localizacao = anuncio.Localizacao,
+                            Ativo = anuncio.Ativo
                         });
                     }
                 }
-
-                return View(anuncios);
             }
+
+            return View(anuncios);
+        }
         #endregion
 
         #region Editar Anúncio
@@ -318,14 +345,13 @@ namespace YURent.Controllers
         {
             var anuncio = _context.Anuncios.Where(a => a.Id_anuncio == id).FirstOrDefault();
 
-
-
             if (System.IO.File.Exists(anuncio.UrlImagem))
             {
                 System.IO.File.Delete(anuncio.UrlImagem);
             }
 
-            _context.Anuncios.Remove(anuncio);
+            anuncio.Ativo = false;
+
             _context.SaveChanges();
 
             return RedirectToAction("MeusAnuncios");
@@ -344,6 +370,8 @@ namespace YURent.Controllers
                 var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
                 var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
 
+
+
                 var guardar = new Guardados()
                 {
                     Utilizador = utilizador,
@@ -359,7 +387,7 @@ namespace YURent.Controllers
                     await _context.Guardados.AddAsync(guardar);
                     await _context.SaveChangesAsync();
                 }
-                return RedirectToAction("Perfil", "Guardados");
+                return RedirectToAction("Guardados", "Perfil");
             }
             else
             {

@@ -19,7 +19,7 @@ namespace YURent.Controllers
     {
         private readonly YURentContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
-        
+
         public HomeController(IWebHostEnvironment hostEnvironment, YURentContext context)
         {
             _context = context;
@@ -62,7 +62,7 @@ namespace YURent.Controllers
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
-            
+
         }
 
         [HttpPost]
@@ -78,7 +78,7 @@ namespace YURent.Controllers
                     Nome = utilizador.Nome,
                     Data_criacao = DateTime.UtcNow,
                     Email = claimsidentity.Name,
-                    UrlImagemPerfil = utilizador.UrlImagemPerfil
+                    UrlImagemPerfil = "~/images/imagem_perfil"
                 };
 
                 _context.Utilizador.Add(newUtilizador);
@@ -98,7 +98,7 @@ namespace YURent.Controllers
 
         #region Resultado Pesquisa
 
-        public async Task<ViewResult> ResultadoPesquisa(string procuraString)
+        public async Task<ViewResult> ResultadoPesquisa(string procuraString, int id)
         {
             var anuncios = new List<AnunciosModel>();
 
@@ -109,15 +109,18 @@ namespace YURent.Controllers
                 {
                     foreach (var anuncio in allanuncios)
                     {
-                        anuncios.Add(new AnunciosModel()
+                        if (anuncio.Ativo)
                         {
-                            Id_anuncio = anuncio.Id_anuncio,
-                            Título = anuncio.Título,
-                            Descricao = anuncio.Descricao,
-                            Categoria = anuncio.Categoria,
-                            Preco_dia = anuncio.Preco_dia,
-                            UrlImagem = anuncio.UrlImagem
-                        });
+                            anuncios.Add(new AnunciosModel()
+                            {
+                                Id_anuncio = anuncio.Id_anuncio,
+                                Título = anuncio.Título,
+                                Descricao = anuncio.Descricao,
+                                Categoria = anuncio.Categoria,
+                                Preco_dia = anuncio.Preco_dia,
+                                UrlImagem = anuncio.UrlImagem
+                            });
+                        }
                     }
                 }
             }
@@ -129,15 +132,18 @@ namespace YURent.Controllers
                 {
                     foreach (var anuncio in anuncios2)
                     {
-                        anuncios.Add(new AnunciosModel()
+                        if (anuncio.Ativo)
                         {
-                            Id_anuncio = anuncio.Id_anuncio,
-                            Título = anuncio.Título,
-                            Descricao = anuncio.Descricao,
-                            Categoria = anuncio.Categoria,
-                            Preco_dia = anuncio.Preco_dia,
-                            UrlImagem = anuncio.UrlImagem
-                        });
+                            anuncios.Add(new AnunciosModel()
+                            {
+                                Id_anuncio = anuncio.Id_anuncio,
+                                Título = anuncio.Título,
+                                Descricao = anuncio.Descricao,
+                                Categoria = anuncio.Categoria,
+                                Preco_dia = anuncio.Preco_dia,
+                                UrlImagem = anuncio.UrlImagem
+                            });
+                        }
                     }
                 }
             }
@@ -158,17 +164,20 @@ namespace YURent.Controllers
             {
                 foreach (var anuncio in ListaAnuncios)
                 {
-                    anuncios.Add(new AnunciosModel()
+                    if (anuncio.Ativo)
                     {
-                        Id_anuncio = anuncio.Id_anuncio,
-                        Título = anuncio.Título,
-                        Descricao = anuncio.Descricao,
-                        Categoria = anuncio.Categoria,
-                        Preco_dia = anuncio.Preco_dia,
-                        UrlImagem = anuncio.UrlImagem
-                    });
+                        anuncios.Add(new AnunciosModel()
+                        {
+                            Id_anuncio = anuncio.Id_anuncio,
+                            Título = anuncio.Título,
+                            Descricao = anuncio.Descricao,
+                            Categoria = anuncio.Categoria,
+                            Preco_dia = anuncio.Preco_dia,
+                            UrlImagem = anuncio.UrlImagem
+                        });
+                    }
                 }
-            }           
+            }
 
             return View("ResultadoPesquisa", anuncios);
         }

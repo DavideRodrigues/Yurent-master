@@ -142,7 +142,7 @@ namespace YURent.Controllers
                         Descricao = utilizador.Descricao,
                         UrlImagemPerfil = utilizador.UrlImagemPerfil
                     };
-                    YURent.Areas.Identity.Pages.Account.LoginModel.imagemSource = newUtilizador.UrlImagemPerfil;
+                    Areas.Identity.Pages.Account.LoginModel.imagemSource = newUtilizador.UrlImagemPerfil;
                     return View(newUtilizador);
                 }
                 else
@@ -173,6 +173,8 @@ namespace YURent.Controllers
                     Email = claimsidentity.Name
                 };
 
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = newUtilizador.UrlImagemPerfil;
+
                 _context.Utilizador.Add(newUtilizador);
                 _context.SaveChanges();
             }
@@ -188,6 +190,8 @@ namespace YURent.Controllers
 
                 utiliza.Nome = utilizador.Nome;
                 utiliza.Descricao = utilizador.Descricao;
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = ImgUtilizador.UrlImagemPerfil;
 
                 _context.SaveChanges();
                 return View(ImgUtilizador);
@@ -256,6 +260,7 @@ namespace YURent.Controllers
 
             if (!_context.Faturacao.Where(a => a.Email == claimsidentity.Name).Any())
             {
+
                 var newFaturacao = new Faturacao()
                 {
                     Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name),
@@ -266,6 +271,8 @@ namespace YURent.Controllers
                     Iban = faturacao.Iban,
                     Email = claimsidentity.Name
                 };
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = newFaturacao.Utilizador.UrlImagemPerfil;
 
                 _context.Faturacao.Add(newFaturacao);
             }
@@ -278,6 +285,8 @@ namespace YURent.Controllers
                 fatura.Codigo_Postal = faturacao.Codigo_Postal;
                 fatura.Nif = faturacao.Nif;
                 fatura.Iban = faturacao.Iban;
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = fatura.Utilizador.UrlImagemPerfil;
             }
 
 
@@ -324,14 +333,16 @@ namespace YURent.Controllers
 
             if (!_context.Verificacao.Where(a => a.Email == claimsidentity.Name).Any())
             {
-                var newVerificao = new Verificacao()
+                var newVerificacao = new Verificacao()
                 {
                     Num_cc = verificacao.Num_cc,
                     Telemovel = verificacao.Telemovel,
                     Email = claimsidentity.Name
                 };
 
-                _context.Verificacao.Add(newVerificao);
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = newVerificacao.Utilizador.UrlImagemPerfil;
+
+                _context.Verificacao.Add(newVerificacao);
             }
             else
             {
@@ -339,6 +350,8 @@ namespace YURent.Controllers
 
                 verifica.Num_cc = verificacao.Num_cc;
                 verifica.Telemovel = verificacao.Telemovel;
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = verifica.Utilizador.UrlImagemPerfil;
             }
 
 
@@ -349,7 +362,7 @@ namespace YURent.Controllers
 
         #region Guardados
         // ERRO
-        public async Task<ViewResult> Guardados()
+        public async Task<IActionResult> Guardados()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
             var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
@@ -358,31 +371,33 @@ namespace YURent.Controllers
             var Guardados = await _context.Guardados.Include(p => p.Anuncios).Where(a => a.Utilizador.Id_utilizador == utilizador.Id_utilizador).ToListAsync();
 
           if (_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
-            {
+          {
                 foreach (var Guardado in Guardados)
                 {
-                    var anuncio = new AnunciosModel()
+                    if(Guardado.Anuncios.Ativo)
                     {
-                        Título = Guardado.Anuncios.Título,
-                        Descricao = Guardado.Anuncios.Descricao,
-                        Categoria = Guardado.Anuncios.Categoria,
-                        Localizacao = Guardado.Anuncios.Localizacao,
-                        Preco_dia = Guardado.Anuncios.Preco_dia,
-                        UrlImagem = Guardado.Anuncios.UrlImagem,
-                        Data_publicacao = Guardado.Anuncios.Data_publicacao
-                    };
+                        var anuncio = new AnunciosModel()
+                        {
+                            Título = Guardado.Anuncios.Título,
+                            Descricao = Guardado.Anuncios.Descricao,
+                            Categoria = Guardado.Anuncios.Categoria,
+                            Localizacao = Guardado.Anuncios.Localizacao,
+                            Preco_dia = Guardado.Anuncios.Preco_dia,
+                            UrlImagem = Guardado.Anuncios.UrlImagem,
+                            Data_publicacao = Guardado.Anuncios.Data_publicacao
+                        };
 
+                        GuardadosModel.Add(new GuardadosModel()
+                        {
+                            Anuncios = anuncio
+                        });
+                    }
 
-                    GuardadosModel.Add(new GuardadosModel()
-                    {
-                        Anuncios = anuncio
-
-                    });
                 }
                 return View(GuardadosModel);
-            }
+          }
 
-            return View();
+            return RedirectToAction("Guardados", "Perfil", new { area = "" });
         }
         #endregion
     }
