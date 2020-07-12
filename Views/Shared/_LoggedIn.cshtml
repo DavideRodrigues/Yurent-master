@@ -1,4 +1,6 @@
-﻿@{
+﻿@model YURent.Models.UtilizadorModel
+
+@{
 }
 
 
@@ -10,7 +12,7 @@
     <div class="navbar-nav d-none d-md-flex">
         <div class="navbar-nav align-items-center">
             <div class="d-flex text-left">
-                <a class="nav-item nav-link" asp-controller="Painel" asp-action="Index">Painel</a>
+                <a class="nav-item nav-link" asp-controller="Perfil" asp-action="Index">Painel</a>
                 <a class="nav-item nav-link" asp-controller="Anuncios" asp-action="MeusAnuncios">Meus Anuncios</a>
                 <a class="nav-item nav-link" asp-controller="Perfil" asp-action="Guardados">Guardados</a>
                 <a class="nav-item nav-link" asp-controller="Anuncios" asp-action="AdicionarAnuncio">Anunciar</a>
@@ -24,7 +26,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuAvatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="@YURent.Areas.Identity.Pages.Account.LoginModel.imagemSource" />
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAvatar">
-                        <a class="dropdown-item" asp-controller="Perfil" asp-action="Index">Perfil</a>
+                        <a class="dropdown-item" asp-controller="Perfil" asp-action="Index" asp-route-id="">Perfil</a>
                         <a class="dropdown-item" asp-controller="Perfil" asp-action="GerirConta">Editar Conta</a>
                         <a class="dropdown-item" asp-controller="Home" asp-action="Index">Guardados</a>
 
@@ -47,7 +49,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="navbar-nav">
-                <a class="nav-item link" asp-controller="Home" asp-action="Index">Modo Comprador</a>
                 <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Painel</a>
                 <a class="nav-item nav-link" asp-controller="Anuncios" asp-action="MeusAnuncios">Meus Anuncios</a>
                 <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Favoritos</a>

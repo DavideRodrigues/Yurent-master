@@ -32,13 +32,24 @@ namespace YURent.Controllers
         [Route("perfil/{id}", Name = "perfilRoute")]
         public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
         {
-            var utilizador = await _context.Utilizador.FindAsync(id);
-            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+            var utilizador = new Utilizador();
             var anunciosModel = new List<AnunciosModel>();
 
-            if(utilizador != null)
+            if (id != 1)
             {
-                foreach(var anuncio in anuncios)
+                utilizador = await _context.Utilizador.FindAsync(id);
+            }
+            else
+            {
+                var claimsidentity = User.Identity as ClaimsIdentity;
+                utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+            }
+
+            var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+
+            if (utilizador != null)
+            {
+                foreach (var anuncio in anuncios)
                 {
                     anunciosModel.Add(new AnunciosModel()
                     {
@@ -55,7 +66,7 @@ namespace YURent.Controllers
                 }
 
                 var perfil = new UtilizadorModel()
-                { 
+                {
                     AnunciosModel = anunciosModel,
                     Nome = utilizador.Nome,
                     Descricao = utilizador.Descricao,
@@ -107,7 +118,7 @@ namespace YURent.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
-            
+
 
             if (ViewBag.Title == "Faturacao")
             {
@@ -197,13 +208,13 @@ namespace YURent.Controllers
                 return View(ImgUtilizador);
             }
 
-           
+
             return View();
         }
         #endregion
 
         #region GerirFaturacao
-       // Vai buscar os dados do faturamento e envia-los para o form(se existirem)
+        // Vai buscar os dados do faturamento e envia-los para o form(se existirem)
         public IActionResult GerirFaturacao()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
@@ -370,11 +381,11 @@ namespace YURent.Controllers
             var GuardadosModel = new List<GuardadosModel>();
             var Guardados = await _context.Guardados.Include(p => p.Anuncios).Where(a => a.Utilizador.Id_utilizador == utilizador.Id_utilizador).ToListAsync();
 
-          if (_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
-          {
+            if (_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
+            {
                 foreach (var Guardado in Guardados)
                 {
-                    if(Guardado.Anuncios.Ativo)
+                    if (Guardado.Anuncios.Ativo)
                     {
                         var anuncio = new AnunciosModel()
                         {
@@ -395,7 +406,7 @@ namespace YURent.Controllers
 
                 }
                 return View(GuardadosModel);
-          }
+            }
 
             return RedirectToAction("Guardados", "Perfil", new { area = "" });
         }
