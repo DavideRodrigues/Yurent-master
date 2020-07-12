@@ -17,6 +17,7 @@ namespace YURent.Controllers
 {
     public class PerfilController : Controller
     {
+
         private readonly YURentContext _context = null;
         private readonly PerfilRepository _perfilRepository = null;
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -198,7 +199,7 @@ namespace YURent.Controllers
         #endregion
 
         #region GerirFaturacao
-        // Vai buscar os dados do faturamento e envia-los para o form (se existirem)
+       // Vai buscar os dados do faturamento e envia-los para o form(se existirem)
         public IActionResult GerirFaturacao()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
@@ -243,7 +244,7 @@ namespace YURent.Controllers
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
             // Enviar o objeto faturação
-            
+
         }
 
         //Adicionar ou editar faturação
@@ -283,14 +284,14 @@ namespace YURent.Controllers
             _context.SaveChanges();
             return View();
         }
+
         #endregion
 
         #region GerirVerificacao
-        // Vai buscar os dados da verificação e evnia-los para o form (se existirem)
+        //Vai buscar os dados da verificação e evnia-los para o form(se existirem)
         public IActionResult GerirVerificacao()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
-            // Enviar o objeto verificação
             if (_context.Verificacao.Where(a => a.Email == claimsidentity.Name).Any())
             {
                 var vericacao = _context.Verificacao.FirstOrDefault(a => a.Email == claimsidentity.Name);
@@ -314,7 +315,8 @@ namespace YURent.Controllers
         }
 
 
-        //Adicionar ou editar faturação
+
+        //Adicionar ou editar Verificacao
         [HttpPost]
         public IActionResult GerirVerificacao(VerificacaoModel verificacao)
         {
@@ -345,7 +347,7 @@ namespace YURent.Controllers
         }
         #endregion
 
-
+        #region Guardados
         // ERRO
         public async Task<ViewResult> Guardados()
         {
@@ -381,6 +383,7 @@ namespace YURent.Controllers
             }
 
             return View();
-        } 
+        }
+        #endregion
     }
 }

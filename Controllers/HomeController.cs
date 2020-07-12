@@ -32,7 +32,6 @@ namespace YURent.Controllers
         }
 
         #region Criar Utilizador
-
         public IActionResult CriarUtilizador()
         {
             var claimsidentity = User.Identity as ClaimsIdentity;
@@ -147,6 +146,7 @@ namespace YURent.Controllers
         }
         #endregion
 
+        #region Pesquisar Categoria
         [Route("Home/PesquisarCategoria/{categoria}", Name = "categoriaRoute")]
         public async Task<ViewResult> PesquisarCategoria(string categoria)
         {
@@ -172,7 +172,7 @@ namespace YURent.Controllers
 
             return View("ResultadoPesquisa", anuncios);
         }
-
+        #endregion
         public IActionResult Perfil()
         {
             return View();

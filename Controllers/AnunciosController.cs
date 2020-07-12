@@ -27,6 +27,7 @@ namespace YURent.Controllers
             this._hostEnvironment = hostEnvironment;
         }
 
+        #region Reservar
         [HttpPost]
         public async Task<IActionResult> Reservar([Bind("Id_anuncio, Id_reserva, Utilizador.Id_utilizador, Data_inicio, Data_fim, Preco_dia")] ReservasAnuncios reservasAnuncios)
         {
@@ -55,10 +56,9 @@ namespace YURent.Controllers
                 string url = "../Identity/Account/Login";
                 return Redirect(url);
             }
-                
-
 
         }
+        #endregion
 
         #region Adicionar anúncio
         public IActionResult AdicionarAnuncio()
@@ -309,6 +309,8 @@ namespace YURent.Controllers
 
         #endregion
 
+        #region Eliminar anuncios
+
         //                                         ERRO ERRO AQUI OLHA PARA ESTE ERRO ERRO ERRO ERRO ERRO
 
         [Route("EliminarAnuncio/{id}", Name = "eliminarRoute")]
@@ -328,6 +330,7 @@ namespace YURent.Controllers
 
             return RedirectToAction("MeusAnuncios");
         }
+        #endregion
 
         #region Guardados
 
