@@ -27,7 +27,7 @@ namespace YURent.Controllers
             {
                 var claimsIdentity = User.Identity as ClaimsIdentity;
                 var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
-                var reservas = await _context.Reservas.Include(p => p.Anuncio).Where(a => a.Utilizador == utilizador).ToListAsync();
+                var reservas = await _context.Reservas.Include(p => p.Anuncio).Where(a => a.Anuncio.Utilizador == utilizador).ToListAsync();
                 var verificacao = _context.Verificacao.FirstOrDefault(a => a.Utilizador == utilizador);
 
                 var utilizadorModel = new UtilizadorModel()
@@ -89,6 +89,32 @@ namespace YURent.Controllers
                 string url = "../Identity/Account/Login";
                 return Redirect(url);
             }
+        }
+
+        [Route("Painel/Aceitar/{id}", Name = "aceitarRoute")]
+        public async Task<IActionResult> Aceitar(int id)
+        {
+            var reserva = await _context.Reservas.FindAsync(id);
+
+            reserva.Aceite = true;
+            reserva.Cancelado = false;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Painel", new { area = "" });
+        }
+
+        [Route("Painel/Recusar/{id}", Name = "recusarRoute")]
+        public async Task<IActionResult> Recusar(int id)
+        {
+            var reserva = await _context.Reservas.FindAsync(id);
+
+            reserva.Aceite = true;
+            reserva.Cancelado = true;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Painel", new { area = "" });
         }
 
     }

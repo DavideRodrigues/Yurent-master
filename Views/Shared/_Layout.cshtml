@@ -21,8 +21,17 @@
 <body>
     @* INÍCIO *@
 
+
+
+
+
     @if (User.Identity.IsAuthenticated)
-    @await Html.PartialAsync("_LoggedIn")
+    {
+                @if(ViewBag.Title == "Painel" || ViewBag.Title == "Adicionar Anúncio" || ViewBag.Title == "Editar Anúncio" || ViewBag.Title == "Meus Anúncios")
+                    @await Html.PartialAsync("_Comprador")
+                else
+                    @await Html.PartialAsync("_LoggedIn")
+    }
     else
     @await Html.PartialAsync("_LoggedOut")
 

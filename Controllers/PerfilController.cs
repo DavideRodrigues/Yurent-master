@@ -186,7 +186,8 @@ namespace YURent.Controllers
                 {
                     Nome = utilizador.Nome,
                     Descricao = utilizador.Descricao,
-                    Email = claimsidentity.Name
+                    Email = claimsidentity.Name,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
 
                 Areas.Identity.Pages.Account.LoginModel.imagemSource = newUtilizador.UrlImagemPerfil;
@@ -196,21 +197,13 @@ namespace YURent.Controllers
             }
             else
             {
-                var utiliza = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
+                var Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
 
-                var ImgUtilizador = new UtilizadorModel()
-                {
-                    UrlImagemPerfil = utilizador.UrlImagemPerfil
-                };
-
-
-                utiliza.Nome = utilizador.Nome;
-                utiliza.Descricao = utilizador.Descricao;
-
-                Areas.Identity.Pages.Account.LoginModel.imagemSource = ImgUtilizador.UrlImagemPerfil;
+                Utilizador.Nome = utilizador.Nome;
+                Utilizador.Descricao = utilizador.Descricao;
 
                 _context.SaveChanges();
-                return View(ImgUtilizador);
+                return View();
             }
 
 
@@ -320,10 +313,8 @@ namespace YURent.Controllers
 
                 var newVerificacao = new VerificacaoModel()
                 {
-
                     Num_cc = vericacao.Num_cc,
                     Telemovel = vericacao.Telemovel
-
                 };
 
                 return View(newVerificacao);

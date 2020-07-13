@@ -1,7 +1,7 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+﻿@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     width: 100%;
     height: 100%;
     margin: 0px;
@@ -10,14 +10,13 @@ body {
 }
 
 /* #region Footer */
-footer {
+footer {    
     margin-top: 50px;
     background-image: url('../images/Layout/footer.svg');
     background-size: cover;
     background-repeat: no-repeat;
     padding-top: 20px;
     width: 100%;
-    height: 100%;
 }
 footer a {
     color: white;
@@ -31,16 +30,7 @@ footer a {
         text-align: left;
     }
 
-@media screen and (max-width: 768px) {
-    footer {
-        background-image: url("../images/Layout/footer_mobile.svg");
-    }
-        footer .navbar-nav {
-            text-align: center;
-        }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 0px) and (max-width: 1024px) {
     footer {
         background-image: url("../images/Layout/footer_mobile.svg");
     }

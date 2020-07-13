@@ -7,7 +7,7 @@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-            
+
 
             <li class="nav-item">
                 <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bem-vindo @UserManager.GetUserName(User)!</a>
@@ -26,5 +26,16 @@
             <li class="nav-item ml-2">
                 <a class="btn btn-orange text-white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
             </li>
+
+            //Suposto dar para telemovel
+            <div class="d-block d-md-none justify-self-end">
+                <li class="nav-item ml-2">
+                    <a class="btn btn-orange text-white" id="register" asp-area="Identity" asp-page="/Account/Register">Registar</a>
+                </li>
+                <li class="nav-item ml-2">
+                    <a class="btn btn-orange text-white" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </li>
+            </div>
+
         }
     </ul>
