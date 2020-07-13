@@ -1,4 +1,5 @@
-﻿@model YURent.ViewModels.ReservasAnuncios
+﻿
+@model YURent.ViewModels.ReservasAnuncios
 
 @{
     ViewData["Title"] = "Anuncio";
@@ -18,7 +19,7 @@
             <div class="card" style="position:fixed; width: 19rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Detalhes de Aluguer</h5>
-                    <form asp-action="Reservar" method="post" class="form-group">
+                    <form asp-action="Reservar" asp-controller="Anuncios" method="post" class="form-group">
                         <input class="form-control" type="hidden" asp-for="Id_anuncio" />
                         <input type="hidden" asp-for="Utilizador.Id_utilizador" />
                         <label>Data</label>
@@ -28,10 +29,6 @@
                         <input class="form-control" asp-for="Preco_dia" readonly />
                         <label>Total</label>
                         <input class="form-control" asp-for="Total" readonly/>
-                        @if (ViewBag.mensagem != "")
-                        {
-                        <label>@ViewBag.mensagem</label>
-                        }
                         <input type="submit" value="Reservar" class="btn btn-orange-outline" />
                     </form>
                 </div>

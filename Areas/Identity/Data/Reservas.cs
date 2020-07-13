@@ -17,6 +17,7 @@ namespace YURent.Areas.Identity.Data
         public DateTime Data_inicio { get; set; }
         public DateTime Data_fim { get; set; }
         public double Preco { get; set; }
+        public bool Aceite { get; set; }
         public bool Cancelado { get; set; }
 
 

@@ -376,6 +376,7 @@ footer a {
     margin-top: 15px;
     border-radius: 150px;
     width: 150px;
+    height: 150px;
 }
 
 #star-painel {
@@ -551,36 +552,13 @@ footer a {
     color: white;
 }
 /* #endregion */
-/* #region Login Facebook/Google */
-#fb {
-    background-color: #3B5998;
-    color: white;
-}
+/* #region Notificaçao */
+.notificacao{
 
-    #fb:hover {
-        background-color: #5775b4;
-        color: white;
-    }
-
-#google {
-    background-color: rgb(222,82,70);
-    color: white;
-}
-
-    #google:hover {
-        background-color: rgb(230, 111, 101);
-        color: white;
-    }
-
-.btn-block {
-    text-align: center;
-    padding: 10px;
-}
-
-.sociais {
-    font-size: 30px;
 }
 /* #endregion */
+
+
 
 /* #region Pesquisar */
 .s130 {

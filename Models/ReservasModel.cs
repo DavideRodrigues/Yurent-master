@@ -19,7 +19,8 @@ namespace YURent.Models
         public DateTime Data_inicio { get; set; }
         [Display(Name = "Data de Fim")]
         public DateTime Data_fim { get; set; }
-        public float Preco { get; set; }
+        public double Preco { get; set; }
+        public bool Aceite { get; set; }
         public bool Cancelado { get; set; }
 
         public UtilizadorModel Utilizador { get; set; }

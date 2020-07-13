@@ -1,5 +1,5 @@
 ﻿@model YURent.Models.UtilizadorModel
-@{     
+@{
     ViewData["Title"] = "Perfil";
 }
 
@@ -74,11 +74,13 @@
 <div class="container" id="outrosprodutos">
     <h3>Outros produtos de @Model.Nome</h3>
     <div class="row mt-2">
-        @foreach(var anuncio in Model.AnunciosModel)
+        @foreach (var anuncio in Model.AnunciosModel)
         {
             <div class="col-md-3">
                 <div class="col-md-12 outrosprodutos">
-                    <img src ="@anuncio.UrlImagem" id="imagem-anuncio" />
+                    <a asp-controller="Anuncios" asp-action="Anuncio" asp-route-id="@anuncio.Id_anuncio">
+                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                    </a>
                     <h5>@anuncio.Título</h5>
                     <h3 class="orange">@anuncio.Preco_dia€ / Dia</h3>
                     <p>@anuncio.Localizacao</p>

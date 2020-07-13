@@ -36,7 +36,7 @@ namespace YURent.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                if (_context.Reservas.Where(a => a.Utilizador.Email == claimsidentity.Name && a.Anuncio.Id_anuncio == reservasAnuncios.Id_anuncio && a.Data_inicio == reservasAnuncios.Data_inicio && a.Data_fim == reservasAnuncios.Data_fim).Any())
+                if (!_context.Reservas.Where(a => a.Utilizador.Email == claimsidentity.Name && a.Anuncio.Id_anuncio == reservasAnuncios.Id_anuncio && a.Data_inicio == reservasAnuncios.Data_inicio && a.Data_fim == reservasAnuncios.Data_fim).Any())
                 {
                     var claimsIdentity = User.Identity as ClaimsIdentity;
                     var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
@@ -52,12 +52,14 @@ namespace YURent.Controllers
                             Utilizador = utilizador,
                             Data_inicio = reservasAnuncios.Data_inicio,
                             Data_fim = reservasAnuncios.Data_fim,
-                            Preco = reservasAnuncios.Preco_dia
+                            Preco = reservasAnuncios.Preco_dia,
+                            Cancelado = false,
+                            Aceite = false
                         };
 
                         await _context.Reservas.AddAsync(novaReserva);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Anuncio", new { id = reservasAnuncios.Id_anuncio });
+                        return RedirectToAction("Anuncio", new { id = reservasAnuncios.Id_anuncio});
                     }
                     else
                     {

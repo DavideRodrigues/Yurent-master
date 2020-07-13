@@ -11,7 +11,9 @@
             {
                 <div class="col-12 shadow p-2 mt-3 d-flex justify-content-between">
                     <div class="d-flex">
-                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                        <a asp-controller="Anuncios" asp-action="Anuncio" asp-route-id="@anuncio.Id_anuncio">
+                            <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                        </a>
                         <div class="d-block ml-2 align-self-center">
                             <h3 class="text-black">@anuncio.Título</h3>
                             <div class="d-flex mt-4">

@@ -65,6 +65,11 @@ namespace YURent.Controllers
                     });
                 }
 
+                //usar forma parecida a  isto para buscar apenas data
+                var dateAndTime = DateTime.Now;
+                var date = dateAndTime.Date;
+
+
                 var perfil = new UtilizadorModel()
                 {
                     AnunciosModel = anunciosModel,
@@ -72,7 +77,7 @@ namespace YURent.Controllers
                     Descricao = utilizador.Descricao,
                     UrlImagemPerfil = utilizador.UrlImagemPerfil,
                     Email = utilizador.Email,
-                    Data_criacao = utilizador.Data_criacao
+                    Data_criacao = utilizador.Data_criacao.Date
                 };
                 return View(perfil);
             }
@@ -283,8 +288,6 @@ namespace YURent.Controllers
                     Email = claimsidentity.Name
                 };
 
-                Areas.Identity.Pages.Account.LoginModel.imagemSource = newFaturacao.Utilizador.UrlImagemPerfil;
-
                 _context.Faturacao.Add(newFaturacao);
             }
             else
@@ -296,8 +299,6 @@ namespace YURent.Controllers
                 fatura.Codigo_Postal = faturacao.Codigo_Postal;
                 fatura.Nif = faturacao.Nif;
                 fatura.Iban = faturacao.Iban;
-
-                Areas.Identity.Pages.Account.LoginModel.imagemSource = fatura.Utilizador.UrlImagemPerfil;
             }
 
 
@@ -319,6 +320,7 @@ namespace YURent.Controllers
 
                 var newVerificacao = new VerificacaoModel()
                 {
+
                     Num_cc = vericacao.Num_cc,
                     Telemovel = vericacao.Telemovel
 
@@ -346,12 +348,11 @@ namespace YURent.Controllers
             {
                 var newVerificacao = new Verificacao()
                 {
+                    Utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name),
                     Num_cc = verificacao.Num_cc,
                     Telemovel = verificacao.Telemovel,
                     Email = claimsidentity.Name
                 };
-
-                Areas.Identity.Pages.Account.LoginModel.imagemSource = newVerificacao.Utilizador.UrlImagemPerfil;
 
                 _context.Verificacao.Add(newVerificacao);
             }
@@ -361,8 +362,6 @@ namespace YURent.Controllers
 
                 verifica.Num_cc = verificacao.Num_cc;
                 verifica.Telemovel = verificacao.Telemovel;
-
-                Areas.Identity.Pages.Account.LoginModel.imagemSource = verifica.Utilizador.UrlImagemPerfil;
             }
 
 
