@@ -22,7 +22,7 @@
         </div>
         <div class="col-12 col-md-8 col-lg-8 col-xl-9 mt-3 my-5 my-md-0">
             <div class="bg-orange text-white p-2 pl-4">
-                <h3 class="font-weight-normal">Pendente Confirmação</h3>
+                <h3 class="font-weight-bold">Pendente Confirmação</h3>
             </div>
             @* Pendente Confirmação *@
             @foreach (var reserva in Model.Reservas)
@@ -52,7 +52,7 @@
             }
             @* A decorrer *@
             <div class="bg-orange text-white p-2 pl-4 mt-3">
-                <h3 class="font-weight-normal">Em progresso</h3>
+                <h3 class="font-weight-bold">Em progresso</h3>
             </div>
 
             @foreach (var reserva in Model.Reservas)
@@ -83,7 +83,7 @@
 
             @* Histórico *@
             <div class="bg-orange text-white p-2 pl-4 mt-3">
-                <h3 class="font-weight-normal">Histórico</h3>
+                <h3 class="font-weight-bold">Histórico</h3>
             </div>
 
             @foreach (var reserva in Model.Reservas)

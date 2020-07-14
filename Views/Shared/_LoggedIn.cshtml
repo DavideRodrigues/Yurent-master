@@ -12,7 +12,7 @@
             <div class="d-flex text-left">
                 <a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Início</a>
                 <a class="nav-item nav-link" asp-controller="Perfil" asp-action="Guardados">Guardados</a>
-                <a class="nav-item nav-link" asp-controller="Perfil" asp-action="Guardados">Reservas</a>
+                <a class="nav-item nav-link" asp-controller="Perfil" asp-action="Reservas">Reservas</a>
 
             </div>
 
@@ -24,7 +24,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuAvatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="@YURent.Areas.Identity.Pages.Account.LoginModel.imagemSource" />
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAvatar">
-                        <a class="dropdown-item" asp-controller="Perfil" asp-action="Index" asp-route-id="">Perfil</a>
+                        <a class="dropdown-item" asp-controller="Perfil" asp-action="Index" asp-route-id="0">Perfil</a>
                         <a class="dropdown-item" asp-controller="Perfil" asp-action="GerirConta">Editar Conta</a>
 
                         <hr />

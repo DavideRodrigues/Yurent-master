@@ -12,6 +12,7 @@ using YURent.Areas.Identity.Data;
 using YURent.Data;
 using YURent.Models;
 using YURent.Repository;
+using YURent.ViewModels;
 
 namespace YURent.Controllers
 {
@@ -30,12 +31,12 @@ namespace YURent.Controllers
         }
 
         [Route("perfil/{id}", Name = "perfilRoute")]
-        public async Task<IActionResult> Index(int id) // ENTRAR NO PAINEL
+        public async Task<IActionResult> Index(int id) 
         {
             var utilizador = new Utilizador();
             var anunciosModel = new List<AnunciosModel>();
 
-            if (id != 1)
+            if (id != 0)
             {
                 utilizador = await _context.Utilizador.FindAsync(id);
             }
@@ -65,9 +66,6 @@ namespace YURent.Controllers
                     });
                 }
 
-                //usar forma parecida a  isto para buscar apenas data
-                var dateAndTime = DateTime.Now;
-                var date = dateAndTime.Date;
 
 
                 var perfil = new UtilizadorModel()
@@ -401,5 +399,83 @@ namespace YURent.Controllers
             return RedirectToAction("Guardados", "Perfil", new { area = "" });
         }
         #endregion
+
+
+
+
+        public async Task<IActionResult> Reservas()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
+                var reservas = await _context.Reservas.Include(p => p.Anuncio).Where(a => a.Anuncio.Utilizador == utilizador).ToListAsync();
+                var verificacao = _context.Verificacao.FirstOrDefault(a => a.Utilizador == utilizador);
+
+                var utilizadorModel = new UtilizadorModel()
+                {
+                    Nome = utilizador.Nome,
+                    Email = utilizador.Email,
+                    Id_utilizador = utilizador.Id_utilizador,
+                    UrlImagemPerfil = utilizador.UrlImagemPerfil
+                };
+
+                var verificacaoModel = new VerificacaoModel()
+                {
+                    Id_verificacao = verificacao.Id_verificacao,
+                    Telemovel = verificacao.Telemovel,
+                    Num_cc = verificacao.Num_cc,
+                    Email = verificacao.Email
+                };
+
+                var anuncioModel = new AnunciosModel();
+                List<ReservasModel> reservasModel = new List<ReservasModel>();
+
+                foreach (var reserva in reservas)
+                {
+                    anuncioModel = new AnunciosModel()
+                    {
+                        Id_anuncio = reserva.Anuncio.Id_anuncio,
+                        Título = reserva.Anuncio.Título,
+                        Categoria = reserva.Anuncio.Categoria,
+                        Descricao = reserva.Anuncio.Descricao,
+                        Preco_dia = reserva.Anuncio.Preco_dia,
+                        UrlImagem = reserva.Anuncio.UrlImagem,
+                        Ativo = reserva.Anuncio.Ativo,
+                        Localizacao = reserva.Anuncio.Localizacao
+                    };
+
+                    reservasModel.Add(new ReservasModel()
+                    {
+                        Id_reserva = reserva.Id_reserva,
+                        Anuncio = anuncioModel,
+                        Data_inicio = reserva.Data_inicio,
+                        Data_fim = reserva.Data_fim,
+                        Preco = reserva.Preco,
+                        Aceite = reserva.Aceite,
+                        Cancelado = reserva.Cancelado
+                    });
+                }
+
+
+                Painel painelData = new Painel()
+                {
+                    Utilizador = utilizadorModel,
+                    Reservas = reservasModel,
+                    Verificacao = verificacaoModel
+                };
+
+                return View(painelData);
+            }
+            else
+            {
+                string url = "../Identity/Account/Login";
+                return Redirect(url);
+            }
+        }
+
+
+
+
     }
 }
