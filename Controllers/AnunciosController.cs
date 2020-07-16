@@ -13,6 +13,7 @@ using YURent.Data;
 using YURent.Models;
 using YURent.Repository;
 using YURent.ViewModels;
+using System.Globalization;
 
 namespace YURent.Controllers
 {
@@ -29,7 +30,7 @@ namespace YURent.Controllers
 
         #region Reservar
         [HttpPost]
-        public async Task<IActionResult> Reservar([Bind("Id_anuncio, Id_reserva, Utilizador.Id_utilizador, Data_inicio, Data_fim, Preco_dia")] ReservasAnuncios reservasAnuncios)
+        public async Task<IActionResult> Reservar([Bind("Id_anuncio, Id_reserva, Utilizador.Id_utilizador, Data_inicio, Data_fim")] ReservasAnuncios reservasAnuncios, string Preco)
         {
 
             var claimsidentity = User.Identity as ClaimsIdentity;
@@ -42,7 +43,12 @@ namespace YURent.Controllers
                     var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
                     var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == reservasAnuncios.Id_anuncio);
 
+                    
+
                     ViewBag.mensagem = "";
+
+                    double Total = double.Parse(Preco, CultureInfo.InvariantCulture.NumberFormat);
+                    
 
                     if (reservasAnuncios.Data_fim > reservasAnuncios.Data_inicio)
                     {
@@ -52,7 +58,7 @@ namespace YURent.Controllers
                             Utilizador = utilizador,
                             Data_inicio = reservasAnuncios.Data_inicio,
                             Data_fim = reservasAnuncios.Data_fim,
-                            Preco = reservasAnuncios.Preco_dia,
+                            Preco = Total,
                             Cancelado = false,
                             Aceite = false
                         };
@@ -189,8 +195,6 @@ namespace YURent.Controllers
                     Nome = anuncioAtual.Utilizador.Nome,
                     UrlImagemPerfil = anuncioAtual.Utilizador.UrlImagemPerfil,
                     Email = anuncioAtual.Utilizador.Email
-
-
                 };
 
                 var DetalhesAnuncio = new ReservasAnuncios()
@@ -205,8 +209,7 @@ namespace YURent.Controllers
                     UrlImagem = anuncioAtual.UrlImagem,
                     Ativo = anuncioAtual.Ativo,
                     Data_inicio = DateTime.Now,
-                    Data_fim = DateTime.Now,
-                    Total = anuncioAtual.Preco_dia * 0.15
+                    Data_fim = DateTime.Now
                 };
 
                 return View(DetalhesAnuncio);
@@ -371,8 +374,6 @@ namespace YURent.Controllers
             {
                 var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == id);
                 var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == claimsidentity.Name);
-
-
 
                 var guardar = new Guardados()
                 {

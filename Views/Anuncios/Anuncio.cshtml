@@ -23,12 +23,12 @@
                         <input class="form-control" type="hidden" asp-for="Id_anuncio" />
                         <input type="hidden" asp-for="Utilizador.Id_utilizador" />
                         <label>Data</label>
-                        <input class="form-control" type="date" asp-for="Data_inicio" />
-                        <input class="form-control" type="date" asp-for="Data_fim" />
-                        <label>Preço por dia</label>
-                        <input class="form-control" asp-for="Preco_dia" readonly />
-                        <label>Total</label>
-                        <input class="form-control" asp-for="Total" readonly/>
+                        <input class="form-control" type="date" id ="Data1" onchange="atualizarPreco();" asp-for="Data_inicio" />
+                        <input class="form-control" type="date" id ="Data2" onchange="atualizarPreco();" asp-for="Data_fim" />
+                        <label>Preço por dia: @Model.Preco_dia</label>
+                        <label >Total: </label>
+                        <label id="Total"></label>
+                        <input class="form-control" name="Preco" id="TotalBD" />
                         <input type="submit" value="Reservar" class="btn btn-orange-outline" />
                     </form>
                 </div>
@@ -37,7 +37,7 @@
 
         <div class="col-12 col-md-7 d-block mt-2">
 
-            <a asp-controller="Anuncios" asp-action="Guardados" asp-route-id="@Model.Id_anuncio" class="card-link btn btn-orange-outline">Guardar</a>
+            <a asp-controller="Anuncios" asp-action="Guardados" asp-route-id="@Model.Id_anuncio" class="card-link btn btn-orange-outline my-1">Guardar</a>
 
             <h3>Descrição</h3>
             <p class="text-grey">
@@ -52,7 +52,7 @@
             <hr />
             @* FALA COM O SERAFIM *@
             <h3>Fala com @Model.Utilizador.Nome</h3>
-            <div class="d-flex mt-2">
+            <div class="d-flex mt-2 mb-1">
                 <a asp-controller="Perfil" asp-action="Index" asp-route-id="@Model.Utilizador.Id_utilizador">
                     <img class="avatar-anuncio" src="@Model.Utilizador.UrlImagemPerfil" />
                 </a>
@@ -69,27 +69,21 @@
     </div>
 </div>
 
-@*<div class="container">
-    <h3>Outros produtos de @Model.Utilizador.Nome</h3>
-    <div class="row mt-2">
-        @foreach (var anuncio in @Model.Utilizador.AnunciosModel)
-        {
-        @if(Model.Id_anuncio != anuncio.Id_anuncio)
-        {
-        <div class="col-12 col-md-4">
-            <div class="outrosprodutos mx-md-2">
-                <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
-                <h5>@anuncio.Título</h5>
-                <h4 class="orange">@anuncio.Preco_dia€ / Dia</h4>
-                <p>@anuncio.Localizacao</p>
-                <img class="star-produto" src="~/images/Stars/5-star.png" />
-            </div>
-        </div>
-        }
-        }
-    </div>
-</div>*@
-
 <div class="d-block d-sm-none container-fluid fixed-bottom text-center border-top bg-light">
     <a href="#"><h3 class="btn btn-orange text-white display-4 m-2">Pedir para Alugar</h3></a>
 </div>
+
+<script>
+    function atualizarPreco() {
+
+        var Data1 = Date.parse(document.getElementById('Data1').value);
+        var Data2 = Date.parse(document.getElementById('Data2').value);
+        
+        var Total = (Data2 - Data1)/ 86400000;
+
+        Total = ((Total * @Model.Preco_dia) * 1.15).toFixed(2);
+
+        document.getElementById('Total').innerHTML = Total;
+        document.getElementById('TotalBD').value = Total;
+    }
+</script>
