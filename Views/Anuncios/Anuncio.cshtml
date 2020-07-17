@@ -21,11 +21,11 @@
                     <form asp-action="Reservar" asp-controller="Anuncios" method="post" class="form-group">
                         <input class="form-control" type="hidden" asp-for="Id_anuncio" />
                         <input type="hidden" asp-for="Utilizador.Id_utilizador" />
-                        <input class="form-control" asp-for="Verificacao.Telemovel" />
                         <label>Data</label>
                         <input class="form-control" type="date" id="Data1" onchange="atualizarPreco();" asp-for="Data_inicio" />
                         <input class="form-control" type="date" id="Data2" onchange="atualizarPreco();" asp-for="Data_fim" />
                         <label>Preço por dia: @Model.Preco_dia</label>
+                        <br />
                         <label id="Total">Total: NA</label>
                         <input name="Preco" id="TotalBD" type="hidden" />
                         <input type="submit" value="Reservar" class="btn btn-orange-outline" />

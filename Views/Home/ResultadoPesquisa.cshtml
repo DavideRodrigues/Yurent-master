@@ -18,30 +18,7 @@
     </form>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="form-group col-md-3 mt-2">
-            <label for="SelectCategoria">Categoria</label>
-            <select class="form-control" id="SelectCategoria">
-                <option value="Câmeras">Câmeras</option>
-                <option value="Drones">Drones</option>
-                <option value="Lentes">Lentes</option>
-                <option value="Eletrónica">Eletrónica</option>
-                <option value="Projetores">Projetores</option>
-                <option value="Instrumentos">Instrumentos</option>
-                <option value="Outros">Outros</option>
-            </select>
-        </div>
-        <div class="from-group col-md-3 mt-2">
-            <label for="SelectPreco">Preço</label>
-            <select class="form-control" id="SelectPreco">
-                <option value="Nenhum"></option>
-                <option value="MaisBarato">Mais Barato</option>
-                <option value="MaisCaro">Mais Caro</option>
-            </select>
-        </div>
-    </div>
-</div>
+
 
 <div class="container mt-5">
     <div class="row">
@@ -49,12 +26,12 @@
             <div class="col-xl-3 col-md-4 col-sm-12 mt-2">
                 <div class="shadow p-3" style="border-radius:15px;">
                     <a asp-controller="Anuncios" asp-action="Anuncio" asp-route-id="@anuncio.Id_anuncio">
-                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" />
+                        <img src="@anuncio.UrlImagem" id="imagem-anuncio" style="width: 100%;" />
                     </a>
                     <h5 class="text-black">@anuncio.Título</h5>
                     <h3 class="orange">@anuncio.Preco_dia € / Dia</h3>
                     <p>@anuncio.Localizacao</p>
-                    <img class="star-produto" src="~/images/Stars/5-star.png" />(57)
+                    <img class="star-produto" src="~/images/Stars/5-star.png" />
                 </div>
             </div>
         }

@@ -38,6 +38,8 @@ namespace YURent.Controllers
                     UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
 
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = utilizadorModel.UrlImagemPerfil;
+
                 var verificacaoModel = new VerificacaoModel()
                 {
                     Id_verificacao = verificacao.Id_verificacao,

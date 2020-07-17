@@ -47,6 +47,7 @@ namespace YURent.Controllers
             }
 
             var anuncios = await _context.Anuncios.Where(a => a.Utilizador == utilizador).ToListAsync();
+            var verificacao = _context.Verificacao.FirstOrDefault(a => a.Utilizador == utilizador);
 
             if (utilizador != null)
             {
@@ -66,9 +67,7 @@ namespace YURent.Controllers
                     });
                 }
 
-
-
-                var perfil = new UtilizadorModel()
+                var utilizadorModel = new UtilizadorModel()
                 {
                     AnunciosModel = anunciosModel,
                     Nome = utilizador.Nome,
@@ -76,6 +75,31 @@ namespace YURent.Controllers
                     UrlImagemPerfil = utilizador.UrlImagemPerfil,
                     Email = utilizador.Email,
                     Data_criacao = utilizador.Data_criacao.Date
+                };
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = utilizadorModel.UrlImagemPerfil;
+
+                var verificacaoModel = new VerificacaoModel();
+
+                if(verificacao != null)
+                {
+                    verificacaoModel = new VerificacaoModel()
+                    {
+                        Telemovel = verificacao.Telemovel
+                    };
+                }
+                else
+                {
+                    verificacaoModel = new VerificacaoModel()
+                    {
+                        Telemovel = "Número Indisponível"
+                    };
+                }
+
+                var perfil = new PerfilViewModel()
+                {
+                    Utilizador = utilizadorModel,
+                    Verificacao = verificacaoModel
                 };
                 return View(perfil);
             }
@@ -420,6 +444,8 @@ namespace YURent.Controllers
                     Id_utilizador = utilizador.Id_utilizador,
                     UrlImagemPerfil = utilizador.UrlImagemPerfil
                 };
+
+                Areas.Identity.Pages.Account.LoginModel.imagemSource = utilizadorModel.UrlImagemPerfil;
 
                 var verificacaoModel = new VerificacaoModel()
                 {
