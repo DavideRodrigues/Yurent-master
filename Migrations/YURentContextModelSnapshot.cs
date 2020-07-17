@@ -258,43 +258,6 @@ namespace YURent.Migrations
                     b.ToTable("Guardados");
                 });
 
-            modelBuilder.Entity("YURent.Areas.Identity.Data.Mensagens", b =>
-                {
-                    b.Property<int>("Id_mensagem")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AnuncioId_anuncio")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Conteudo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Fromseller")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Id_utilizador")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UtilizadorId_utilizador")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Vista")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id_mensagem");
-
-                    b.HasIndex("AnuncioId_anuncio");
-
-                    b.HasIndex("UtilizadorId_utilizador");
-
-                    b.ToTable("Mensagens");
-                });
-
             modelBuilder.Entity("YURent.Areas.Identity.Data.Reservas", b =>
                 {
                     b.Property<int>("Id_reserva")
@@ -330,29 +293,6 @@ namespace YURent.Migrations
                     b.HasIndex("UtilizadorId_utilizador");
 
                     b.ToTable("Reservas");
-                });
-
-            modelBuilder.Entity("YURent.Areas.Identity.Data.Transacoes", b =>
-                {
-                    b.Property<int>("Id_transacoes")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Id_utilizador")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ReservaId_reserva")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id_transacoes");
-
-                    b.HasIndex("ReservaId_reserva");
-
-                    b.ToTable("Transacoes");
                 });
 
             modelBuilder.Entity("YURent.Areas.Identity.Data.Utilizador", b =>
@@ -549,17 +489,6 @@ namespace YURent.Migrations
                         .HasForeignKey("UtilizadorId_utilizador");
                 });
 
-            modelBuilder.Entity("YURent.Areas.Identity.Data.Mensagens", b =>
-                {
-                    b.HasOne("YURent.Areas.Identity.Data.Anuncios", "Anuncio")
-                        .WithMany()
-                        .HasForeignKey("AnuncioId_anuncio");
-
-                    b.HasOne("YURent.Areas.Identity.Data.Utilizador", "Utilizador")
-                        .WithMany()
-                        .HasForeignKey("UtilizadorId_utilizador");
-                });
-
             modelBuilder.Entity("YURent.Areas.Identity.Data.Reservas", b =>
                 {
                     b.HasOne("YURent.Areas.Identity.Data.Anuncios", "Anuncio")
@@ -569,13 +498,6 @@ namespace YURent.Migrations
                     b.HasOne("YURent.Areas.Identity.Data.Utilizador", "Utilizador")
                         .WithMany()
                         .HasForeignKey("UtilizadorId_utilizador");
-                });
-
-            modelBuilder.Entity("YURent.Areas.Identity.Data.Transacoes", b =>
-                {
-                    b.HasOne("YURent.Areas.Identity.Data.Reservas", "Reserva")
-                        .WithMany()
-                        .HasForeignKey("ReservaId_reserva");
                 });
 
             modelBuilder.Entity("YURent.Areas.Identity.Data.Verificacao", b =>

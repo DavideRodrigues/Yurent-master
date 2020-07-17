@@ -20,8 +20,6 @@ namespace YURent.Data
         public DbSet<Faturacao> Faturacao { get; set; }
         public DbSet<Verificacao> Verificacao { get; set; }
         public DbSet<Reservas> Reservas { get; set; }
-        public DbSet<Transacoes> Transacoes { get; set; }
-        public DbSet<Mensagens> Mensagens { get; set; }
         public DbSet<Utilizador> Utilizador { get; set; }
         public DbSet<Guardados> Guardados { get; set; }
 

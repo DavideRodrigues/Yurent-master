@@ -31,7 +31,7 @@ namespace YURent.Controllers
         }
 
         [Route("perfil/{id}", Name = "perfilRoute")]
-        public async Task<IActionResult> Index(int id) 
+        public async Task<IActionResult> Index(int id)
         {
             var utilizador = new Utilizador();
             var anunciosModel = new List<AnunciosModel>();
@@ -369,6 +369,8 @@ namespace YURent.Controllers
             var GuardadosModel = new List<GuardadosModel>();
             var Guardados = await _context.Guardados.Include(p => p.Anuncios).Where(a => a.Utilizador.Id_utilizador == utilizador.Id_utilizador).ToListAsync();
 
+
+
             if (_context.Guardados.Where(a => a.Utilizador == utilizador).Any())
             {
                 foreach (var Guardado in Guardados)
@@ -383,7 +385,8 @@ namespace YURent.Controllers
                             Localizacao = Guardado.Anuncios.Localizacao,
                             Preco_dia = Guardado.Anuncios.Preco_dia,
                             UrlImagem = Guardado.Anuncios.UrlImagem,
-                            Data_publicacao = Guardado.Anuncios.Data_publicacao
+                            Data_publicacao = Guardado.Anuncios.Data_publicacao,
+                            Id_anuncio = Guardado.Anuncios.Id_anuncio
                         };
 
                         GuardadosModel.Add(new GuardadosModel()
@@ -400,9 +403,7 @@ namespace YURent.Controllers
         }
         #endregion
 
-
-
-
+        #region Reservas
         public async Task<IActionResult> Reservas()
         {
             if (User.Identity.IsAuthenticated)
@@ -474,7 +475,7 @@ namespace YURent.Controllers
             }
         }
 
-
+        #endregion
 
 
     }

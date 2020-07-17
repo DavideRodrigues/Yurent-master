@@ -51,6 +51,11 @@ namespace YURent.Controllers
 
                 foreach (var reserva in reservas)
                 {
+                    var utilizadorReserva = new UtilizadorModel()
+                    {
+                        Id_utilizador = reserva.Utilizador.Id_utilizador,
+                        Nome = reserva.Utilizador.Nome
+                    };
                     anuncioModel = new AnunciosModel()
                     {
                         Id_anuncio = reserva.Anuncio.Id_anuncio,
@@ -66,6 +71,7 @@ namespace YURent.Controllers
                     reservasModel.Add(new ReservasModel()
                     {
                         Id_reserva = reserva.Id_reserva,
+                        Utilizador = utilizadorReserva,
                         Anuncio = anuncioModel,
                         Data_inicio = reserva.Data_inicio,
                         Data_fim = reserva.Data_fim,

@@ -43,7 +43,7 @@ namespace YURent.Controllers
                     var utilizador = _context.Utilizador.FirstOrDefault(a => a.Email == User.Identity.Name);
                     var anuncio = _context.Anuncios.FirstOrDefault(a => a.Id_anuncio == reservasAnuncios.Id_anuncio);
 
-                    
+
 
                     ViewBag.mensagem = "";
 
@@ -62,6 +62,8 @@ namespace YURent.Controllers
                             Cancelado = false,
                             Aceite = false
                         };
+
+
 
                         await _context.Reservas.AddAsync(novaReserva);
                         await _context.SaveChangesAsync();

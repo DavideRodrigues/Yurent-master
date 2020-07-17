@@ -10,7 +10,8 @@ namespace YURent.ViewModels
     {
         public int Id_anuncio { get; set; }
         public UtilizadorModel Utilizador { get; set; }
-        
+        public VerificacaoModel Verificacao { get; set; }
+
         public string Título { get; set; }
         public string Descricao { get; set; }
 

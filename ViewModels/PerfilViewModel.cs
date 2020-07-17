@@ -8,5 +8,7 @@ namespace YURent.ViewModels
 {
     public class PerfilViewModel
     {
+        UtilizadorModel Utilizador { get; set; }
+        VerificacaoModel Verificacao { get; set; }
     }
 }
